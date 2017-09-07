@@ -4,9 +4,9 @@
 
 	QtN	*	Price	=	Amount	=>	Item
 
-	1	*	50.0	=	 50.0	=>	Ball
-	2	*	25.0	=	 50.0	=>	KrakJack
-	2	*	250.0	=	 500.0	=>	Stumps
+	1	*	200.0	=	 200.0	=>	Bat
+	1	*	25.0	=	 25.0	=>	Good Day
+	2	*	10.0	=	 20.0	=>	Monaco
 
 
-			TOTAL AMT is:=600.0
+			TOTAL AMT is:=245.0
