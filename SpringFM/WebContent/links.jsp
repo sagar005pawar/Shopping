@@ -13,7 +13,5 @@
   <link rel="stylesheet" href='<c:url value="/css/bootstrap.min.css"></c:url>'>
   <script src='<c:url value="/js/bootstrap.min.js"></c:url>' type="text/javascript"></script>
   <script src='<c:url value="/js/jquery.min.js"></c:url>' type="text/javascript"></script>
-  <script src='<c:url value="/js/searchProductsAJAX.js"></c:url>' type="text/javascript"></script>
   <script src='<c:url value="/js/confirm.js"></c:url>' type="text/javascript"></script>
-  
   

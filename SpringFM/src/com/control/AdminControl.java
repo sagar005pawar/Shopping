@@ -33,6 +33,7 @@ public class AdminControl {
 	
 	@RequestMapping("/Homepage")
 	public ModelAndView homepage() {
+		sess.setAttribute("Products", (service.getProducts()).stream().collect(Collectors.toList()));
 		return new ModelAndView("Homepage");
 	}	
 
@@ -42,7 +43,7 @@ public class AdminControl {
 			sess.setAttribute("sc", (service.getProducts()).stream().sorted((f1, f2)->f1.getType().toLowerCase().compareTo(f2.getType().toLowerCase())).map(Products::getType).distinct().collect(Collectors.toList()));
 			return new ModelAndView("Home");
 		} catch (Exception e) {
-			return new ModelAndView("logout");
+			return new ModelAndView("redirect:/AdminLogout");
 		}
 
 	}	
@@ -54,7 +55,7 @@ public class AdminControl {
 			sess.setAttribute("asi", (service.getProducts()).stream().filter(p->p.getType().equals(type)).sorted((h1, h2)->h1.getPrName().compareToIgnoreCase(h2.getPrName())).collect(Collectors.toList()));
 			return new ModelAndView("Products");
 		} catch (Exception e) {
-			return new ModelAndView("logout");
+			return new ModelAndView("Wel");
 		}
 	}	
 

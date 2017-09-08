@@ -34,5 +34,43 @@
   </marquee>
   
 </center>
+<script type="text/javascript">
+var request;
+function searchInfo(){
+ 	if (window.XMLHttpRequest) {
+    	// code for modern browsers
+    	request = new XMLHttpRequest();
+   	} else {
+    	// code for IE6, IE5
+    	request = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+	var term = document.getElementById('search').value;
+	var url = "/SpringFM/searchAJAX/" + term.trim();
+	var string='';
+	try {
+		if((term.trim())==''||(term==null)){
+			document.getElementById('searchingList').innerHTML = '';
+		} else { 
+			request.onreadystatechange=function(){
+				if(request.readyState==4){
+					var val = JSON.parse(request.responseText);
+					for (var i=0; i < val.length; i++) {
+						string += "<a class='aLinks' href='/SpringFM/searchAJAXpro/" + val[i] + "'" + "target='frame3'>" + val[i] + "</a>";
+					}
+					document.getElementById('searchingList').innerHTML = string;
+				}else{
+					document.getElementById('searchingList').innerHTML = '';
+				}
+			}//end of function
+			request.open("GET",url,true);
+			request.send();
+		}
+	}catch(e){
+		alert("Unable to connect to server");
+		document.getElementById('searchingList').innerHTML = '';
+	}
+}	
+</script>
+
 </body>
 </html>

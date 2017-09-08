@@ -33,7 +33,7 @@ import rest.ProductForm;
 public class Controller {
 
 	//@SessionAttributes({"user", "userLog", "sc", "asi", "shopping", "total"})
-//	private static final Logger logger = LoggerFactory.getLogger(Controller.class);
+	private static final Logger logger = LoggerFactory.getLogger(Controller.class);
 
 	@Autowired
 	private ServiceIn service;
@@ -81,11 +81,13 @@ public class Controller {
 	}	
 
 	@RequestMapping("/searchAJAX/{term}")
-	public void searchAJAX(HttpServletResponse resp, @PathVariable("term") String term){
+	public void searchAJAX(HttpServletResponse resp, @PathVariable("term") String term) {
 		try {
-			System.out.println("searchAJAX..");
-			if (term!="" && term!=null) {
-                String searchList = new Gson().toJson((service.getProducts()).stream().filter(p->p.getPrName().toLowerCase().contains(term.toLowerCase())).map(Products::getPrName).distinct().limit(4).collect(Collectors.toList()));
+			String t = term.trim();
+			System.out.println("searchAJAX.. " + t);
+			if (t!="" && t!=null && t!=" ") {
+                String searchList = new Gson().toJson(((List<Products>) sess.getAttribute("Products")).stream().filter(p->p.getPrName().toLowerCase().contains(t.toLowerCase())).map(Products::getPrName).distinct().limit(4).collect(Collectors.toList()));
+                System.out.println("searchList= " + searchList);
                 resp.getWriter().write(searchList);
 			} else {
 	            resp.getWriter().write(" ");					
@@ -94,6 +96,29 @@ public class Controller {
 			System.out.println(e);
 		}							
 	}
+	
+	@RequestMapping("/searchAJAXpro/{prname}")
+	public ModelAndView searchAJAXpro(@PathVariable("prname") String prname){
+		try {
+			System.out.println("SectionItemsListToUser.. "+ prname);
+			sess.setAttribute("asi", (service.getProducts()).stream().filter(p->p.getPrName().toLowerCase().equals(prname.toLowerCase())).collect(Collectors.toList()));
+			return new ModelAndView("UserProducts");
+		} catch (Exception e) {
+			return new ModelAndView("redirect:/logout");
+		}		
+	}
+	
+	@RequestMapping("/AsearchAJAXpro/{prname}")
+	public ModelAndView asearchAJAXpro(@PathVariable("prname") String prname){
+		try {
+			System.out.println("SectionItemsListToUser.. "+ prname);
+			sess.setAttribute("asi", (service.getProducts()).stream().filter(p->p.getPrName().toLowerCase().equals(prname.toLowerCase())).collect(Collectors.toList()));
+			return new ModelAndView("Products");
+		} catch (Exception e) {
+			return new ModelAndView("redirect:/AdminLogout");
+		}		
+	}
+
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/removeItem/{prname}")
@@ -171,6 +196,7 @@ public class Controller {
 
 	@RequestMapping("/UserHomepage")
 	public ModelAndView userHomepage() {
+		sess.setAttribute("Products", (service.getProducts()).stream().collect(Collectors.toList()));
 		return new ModelAndView("UserHomepage");
 	}	
 
@@ -180,7 +206,7 @@ public class Controller {
 			sess.setAttribute("sc", (service.getProducts()).stream().sorted((f1, f2)->f1.getType().toLowerCase().compareTo(f2.getType().toLowerCase())).map(Products::getType).distinct().collect(Collectors.toList()));
 			return new ModelAndView("UserHome");
 		} catch (Exception e) {
-			return new ModelAndView("logout");
+			return new ModelAndView("redirect:/logout");
 		}
 
 	}	
@@ -192,9 +218,8 @@ public class Controller {
 			sess.setAttribute("asi", (service.getProducts()).stream().filter(p->p.getType().equals(type)).sorted((h1, h2)->h1.getPrName().compareToIgnoreCase(h2.getPrName())).collect(Collectors.toList()));
 			return new ModelAndView("UserProducts");
 		} catch (Exception e) {
-			return new ModelAndView("logout");
+			return new ModelAndView("Wel");
 		}
-
 	}	
 	
 	@RequestMapping("/SignupCntl")
@@ -326,13 +351,12 @@ public class Controller {
 	public void init(){
 		System.out.println("initialized..");
 
-/*		PropertyConfigurator.configure(environment.getRequiredProperty("log4j.properties.file"));
+		PropertyConfigurator.configure(environment.getRequiredProperty("log4j.properties.file"));
 		logger.trace("TRACE");
 		logger.debug("DEBUG");
 		logger.info("INFO");
 		logger.warn("WARN");
 		logger.error("ERROR");		
-*/	
 	}
 	
 	@PreDestroy
