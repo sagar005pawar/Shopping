@@ -49,13 +49,19 @@
 				<c:if test="${u.fromBy!=0 }">
 				<td><a href="/SpringFM/profile/${u.id }">${u.fromBy }</a></td>
 				</c:if>
-				<c:if test="${!u.admin }">
+				<c:if test="${!u.admin && u.fromBy!=0}">
 				<td><a href="/SpringFM/AdminApprove/${u.id }/${user.id }">Approval</a></td>
-				</c:if>
-				<c:if test="${u.admin}">
+				</c:if>				
+				<c:if test="${!u.admin && u.fromBy==0}">
+				<td><a href="/SpringFM/NewAdminApprove/${u.id }/${user.id }">Approval</a></td>
+				</c:if>								
+				<c:if test="${u.admin && u.fromBy!=0}">
 				<td><a href="/SpringFM/AdminUnApproval/${u.id }/${u.fromBy }">Ignore</a></td>
 				</c:if>
-				<c:if test="${!u.admin }">
+				<c:if test="${!u.admin && u.fromBy!=0}">
+				<td><a href="/SpringFM/SuspendAdminRemoved/${u.id }">Ignore</a></td>
+				</c:if>				
+				<c:if test="${!u.admin && u.fromBy==0}">
 				<td><a href="/SpringFM/AdminRemoved/${u.id }">Ignore</a></td>
 				</c:if>				
 			</tr>

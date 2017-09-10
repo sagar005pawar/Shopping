@@ -1,4 +1,8 @@
 	function validation() {
+		var e=document.loginForm.txt5.value;
+		var atpos=e.indexOf("@");
+		var dotpos=e.lastIndexOf(".");
+		var j=e.split(' ').join('+');
 //		document.getElementById("errorMessage").innerHTML="Sign-Up Field should not be blank..";
 		if(document.loginForm.txt1.value=="" || document.loginForm.txt1.value.split(' ').join('+')!=document.loginForm.txt1.value){
 			document.getElementById("errorMessage").innerHTML="FirstName Field should not be blank or Spaces..";
@@ -24,7 +28,12 @@
 			document.loginForm.txt4.focus();
 			return false;
 		}
-		if(document.loginForm.txt5.value=="" || document.loginForm.txt5.value.split(' ').join('+')!=document.loginForm.txt5.value){
+		if((e=="") || (j!=e)){
+			if((atpos<1) || (dotpos<atpos+2) || (dotpos+2>=e.length)){
+				document.loginForm.txt5.focus();
+				window.alert("Please enter Vali-Email Id..");				
+				return false;
+			}
 			window.alert("Email Field should not be blank or Spaces..");
 			document.getElementById("errorMessage").innerHTML="Email Field should not be blank or Spaces..";
 			document.loginForm.txt5.focus();

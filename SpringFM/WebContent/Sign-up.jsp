@@ -33,11 +33,11 @@
 		<label id="pass">Password :</label> 
 		<input class="regn-input-pass" type="password" id="txt4" name="password" required="required" /><br />
 		<label id="uname">Email :</label>
-		<input class="input-uname" type="text" id="txt5" name="email" required="required" /><br />
+		<input class="input-uname" type="email" id="txt5" name="email" title="Contact's email (format: xxx@xxx.xxx)" required="required" /><br />
 		<label id="uname">Mobile :</label>
-		<input class="input-uname" type="text" id="txt6" name="contact" required="required" /><br />
+		<input class="input-uname" pattern="[789][0-9]{9}" type="text" id="txt6" name="contact" required="required" /><br />
 		<label id="uname">Pincode :</label>
-		<input class="input-uname" type="text" id="txt7" name="pincode" required="required" /><br />
+		<input class="input-uname" pattern="[0-9]{6}" type="text" id="txt7" name="pincode" required="required" /><br />
 		<label id="city">City :</label> 
 		<input class="input-city" type="text" name="city" id="txt8" required="required" />
 		<input type="hidden" id="txt9" name="user" value="cust" required="required" />

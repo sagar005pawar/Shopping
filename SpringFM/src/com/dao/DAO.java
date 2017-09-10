@@ -486,11 +486,11 @@ public class DAO implements DaoIn {
 			return ((User)queryResult);
 		} catch (Exception e) {
 			this.exceptional();
-			System.err.println(e);
+			System.err.println("e= "+e);
+			return new User();
 		} finally {
 			this.closeSession();
 		}		
-		return u1;
 	}
 	
 	public List<User> getUnAuthorizedAdmins() {

@@ -239,7 +239,7 @@ public class Controller {
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public ModelAndView valid(@ModelAttribute User u, BindingResult br) {
 		User u1 = service.validateUser(u);
-		if(u1.getCity()!=null) {
+		if(u1!=null && u1.getCity()!=null) {
 			sess.setAttribute("userLog", "login");
 			sess.setAttribute("user", u1);
 			service.ShoppingTruncate();
@@ -248,7 +248,7 @@ public class Controller {
 			sess.setAttribute("total", T);
 			return new ModelAndView("welcome", "user", u1);						
 		} else {
-			return new ModelAndView("Login");									
+			return new ModelAndView("Login", "msg", "Invalid User..");									
 		}
 	}	
 	

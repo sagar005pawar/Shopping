@@ -203,18 +203,34 @@ public class AdminControl {
 	public ModelAndView profile(@PathVariable("id") int id) {		
 		return new ModelAndView("Profile", "urPro", service.getUser(id));
 	}
-		
+			
+	@RequestMapping("/NewAdminApprove/{id}/{fromBy}")
+	public ModelAndView newAdminApprove(@PathVariable("id") int id, @PathVariable("fromBy") int fromBy) {
+		ModelAndView model = new ModelAndView("Admins");
+		if(service.adminApprove(id, fromBy)){
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).collect(Collectors.toList()));
+			model.addObject("heading", "NEW Admins");
+			model.addObject("msg", "Admin Approved= "+id);
+			return model;			
+		} else {
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).collect(Collectors.toList()));
+			model.addObject("heading", "NEW Admins");
+			model.addObject("msg", "Admin Approval= FAILED");
+			return model;			
+		}
+	}
+
 	@RequestMapping("/AdminApprove/{id}/{fromBy}")
 	public ModelAndView adminApprove(@PathVariable("id") int id, @PathVariable("fromBy") int fromBy) {
 		ModelAndView model = new ModelAndView("Admins");
 		if(service.adminApprove(id, fromBy)){
 			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
-			model.addObject("heading", "Authorized Admins");
+			model.addObject("heading", "Suspended Admins");
 			model.addObject("msg", "Admin Approved= "+id);
 			return model;			
 		} else {
 			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
-			model.addObject("heading", "Authorized Admins");
+			model.addObject("heading", "Suspended Admins");
 			model.addObject("msg", "Admin Approval= FAILED");
 			return model;			
 		}
@@ -236,22 +252,38 @@ public class AdminControl {
 		}
 	}
 
-	@RequestMapping("/AdminRemoved/{id}")
-	public ModelAndView adminRemoved(@PathVariable("id") int id) {	
+	@RequestMapping("/SuspendAdminRemoved/{id}")
+	public ModelAndView suspendAdminRemoved(@PathVariable("id") int id) {	
 		ModelAndView model = new ModelAndView("Admins");
 		if (service.AdminRemoved(id)) {
 			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
-			model.addObject("heading", "Authorized Admins");
+			model.addObject("heading", "Suspended Admins");
 			model.addObject("msg", "Admin Removed= " + id);
 			return model;			
 		} else {
 			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
-			model.addObject("heading", "Authorized Admins");
+			model.addObject("heading", "Suspended Admins");
 			model.addObject("msg", "Admin Removing= FAILED");
 			return model;			
 		}
 	}
-	
+		
+	@RequestMapping("/AdminRemoved/{id}")
+	public ModelAndView adminRemoved(@PathVariable("id") int id) {	
+		ModelAndView model = new ModelAndView("Admins");
+		if (service.AdminRemoved(id)) {
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).collect(Collectors.toList()));
+			model.addObject("heading", "NEW Admins");
+			model.addObject("msg", "Admin Removed= " + id);
+			return model;			
+		} else {
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).collect(Collectors.toList()));
+			model.addObject("heading", "NEW Admins");
+			model.addObject("msg", "Admin Removing= FAILED");
+			return model;			
+		}
+	}
+
 	@RequestMapping("/ASignupCntl")
 	public ModelAndView asignupCntl(@ModelAttribute("user") User u, BindingResult br) { 
 		String msg = null;
@@ -274,7 +306,8 @@ public class AdminControl {
 			return new ModelAndView("AdminLoginPage", "msg", br.getAllErrors());			
 		}
 		User u1 = service.validateUser(u);
-		if(u1.getUser().equals("admin")) {
+		System.out.println("u1= "+u1);
+		if(u1!=null && u1.getUser().equals("admin") && u1.getUser()!=null) {
 			if(u1.isAdmin()){
 				sess.setAttribute("userLog", "login");
 				sess.setAttribute("user", u1);

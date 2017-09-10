@@ -11,28 +11,6 @@
   <script type="text/javascript" src="js/easing.js"></script>	
 	<jsp:include page="/links.jsp" />
 
-   <script type="text/javascript">
-	function validation() {
-		var name=document.loginForm.usname11.value;
-		var password=document.loginForm.pass11.value;
-		var n1=name.split(' ').join('+');
-		var p1=password.split(' ').join('+');
-//		document.getElementById("errorMessage").innerHTML="Login Field should not be blank..";
-		if(name=="" || n1!=name){
-			document.getElementById("errorMessage").innerHTML="username Field should not be blank or with spaces..";
-			window.alert("username Field should not be blank or with spaces..");
-			document.loginForm.usname11.focus();
-			return false;
-		}
-		if(password=="" || p1!=password){
-			document.getElementById("errorMessage").innerHTML="password Field should not be blank or with spaces..";
-			window.alert("Password Field should not be blank or with spaces..");
-			document.loginForm.pass11.focus();
-			return false;
-		}
-		return true;
-	}
-</script> 
 
 
 </head>
@@ -75,7 +53,7 @@
 	    		</div>
 	    		<div class="form-group">
 	      			<div class="col-sm-offset-4 col-sm-4">
-						<b><a class="reg link" href="AdminSignUp.jsp">NEW Admin</a>
+						<b><a class="reg link" href="AdminSignUp.jsp">NEW AdmiN</a>
 						<a class="admin link" href="/SpringFM/">UserS</a></b>
 	      			</div>
 	    		</div>
@@ -99,5 +77,28 @@
 			<label>${msg }</label>
 		</div>
 	</div>	
+	   <script type="text/javascript">
+	function validation() {
+		var name=document.loginForm.usname11.value;
+		var password=document.loginForm.pass11.value;
+		var n1=name.split(' ').join('+');
+		var p1=password.split(' ').join('+');
+//		document.getElementById("errorMessage").innerHTML="Login Field should not be blank..";
+		if(name=="" || n1!=name){
+			document.getElementById("errorMessage").innerHTML="username Field should not be blank or with spaces..";
+			window.alert("username Field should not be blank or with spaces..");
+			document.loginForm.usname11.focus();
+			return false;
+		}
+		if(password=="" || p1!=password){
+			document.getElementById("errorMessage").innerHTML="password Field should not be blank or with spaces..";
+			window.alert("Password Field should not be blank or with spaces..");
+			document.loginForm.pass11.focus();
+			return false;
+		}
+		return true;
+	}
+</script> 
+	
 </body>
 </html>
