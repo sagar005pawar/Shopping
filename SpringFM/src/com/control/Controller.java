@@ -84,7 +84,6 @@ public class Controller {
 	public void searchAJAX(HttpServletResponse resp, @PathVariable("term") String term) {
 		try {
 			String t = term.trim();
-			System.out.println("searchAJAX.. " + t);
 			if (t!="" && t!=null && t!=" ") {
                 String searchList = new Gson().toJson(((List<Products>) sess.getAttribute("Products")).stream().filter(p->p.getPrName().toLowerCase().contains(t.toLowerCase())).map(Products::getPrName).distinct().limit(4).collect(Collectors.toList()));
                 System.out.println("searchList= " + searchList);
@@ -100,7 +99,6 @@ public class Controller {
 	@RequestMapping("/searchAJAXpro/{prname}")
 	public ModelAndView searchAJAXpro(@PathVariable("prname") String prname){
 		try {
-			System.out.println("SectionItemsListToUser.. "+ prname);
 			sess.setAttribute("asi", (service.getProducts()).stream().filter(p->p.getPrName().toLowerCase().equals(prname.toLowerCase())).collect(Collectors.toList()));
 			return new ModelAndView("UserProducts");
 		} catch (Exception e) {
@@ -223,15 +221,25 @@ public class Controller {
 	}	
 	
 	@RequestMapping("/SignupCntl")
-	public ModelAndView signupCntl(@ModelAttribute("user") User u) {
-		service.SingupDAO(u);
-		return new ModelAndView("Login");
+	public ModelAndView signupCntl(@ModelAttribute("user") User u, BindingResult br) {
+		String msg = null;
+		if(br.hasErrors()){
+			System.out.println("errors= " + br.getErrorCount());
+			msg = "NOT Register ERROR in: " + br.getFieldError().getField();
+		}
+		if(!br.hasErrors()){
+			System.out.println(u);
+			service.SingupDAO(u);
+			msg = "User Registered..";
+		}
+		return new ModelAndView("Login", "msg", msg);			
 	}			
+	
 
 	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public ModelAndView valid(@ModelAttribute User u) {
+	public ModelAndView valid(@ModelAttribute User u, BindingResult br) {
 		User u1 = service.validateUser(u);
-		if(u1.getCity()!=null){
+		if(u1.getCity()!=null) {
 			sess.setAttribute("userLog", "login");
 			sess.setAttribute("user", u1);
 			service.ShoppingTruncate();

@@ -115,5 +115,40 @@ public class Service implements ServiceIn {
 	public Shopping latestCommander(Products p, double total) {
 		return this.dao.latestCommander(p, total);
 	}
+
+	@Override
+	public List<User> getCustomers() {
+		return this.dao.getCustomers();
+	}
+
+	@Override
+	public List<User> getAuthorizedAdmins() {
+		return this.dao.getAuthorizedAdmins();
+	}
+
+	@Override
+	public List<User> getUnAuthorizedAdmins() {
+		return this.dao.getUnAuthorizedAdmins();
+	}
+
+	@Override
+	public User getUser(int id) {
+		return this.dao.getUser(id);
+	}
+
+	@Override
+	public boolean AdminUnApproval(int id, int fromBy) {
+		return this.dao.AdminUnApproval(id, fromBy);
+	}
+
+	@Override
+	public boolean AdminRemoved(int id) {
+		return this.dao.AdminRemoved(id);
+	}
+
+	@Override
+	public boolean adminApprove(int id, int fromBy) {
+		return this.dao.adminApprove(id, fromBy);
+	}
 		
 }

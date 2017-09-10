@@ -8,6 +8,7 @@ import com.model.*;
 public interface DaoIn {
 	
 	public User getUser(String username, String password);
+	public User getUser(int id);
 	public User  validateUser(User u1);
 	public List<Products> getProducts();
 	public void closeSession();
@@ -27,7 +28,11 @@ public interface DaoIn {
 	public void ShoppingTruncate();
 	public boolean ReplaceSingleItem(Shopping s1);
 	public Shopping latestCommander(Products p, double total);
-
-	
+	public List<User> getCustomers();
+	public List<User> getAuthorizedAdmins();
+	public List<User> getUnAuthorizedAdmins();
+	public boolean AdminUnApproval(int id, int fromBy);
+	public boolean AdminRemoved(int id);
+	public boolean adminApprove(int id, int fromBy);
 	
 }

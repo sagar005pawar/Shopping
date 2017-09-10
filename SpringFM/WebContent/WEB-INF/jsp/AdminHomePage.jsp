@@ -26,10 +26,13 @@
 	<br><br><br><div style=" font-size: 38px; text-align: center; color: white; font-family: Castellar;"><u>Admin-Home</u></div><br><br>
 	<div class="adminhome" align="center">
 		<div class="adminoperations" >
+			<a class="ln" href="/SpringFM/Homepage">Display Items</a><br><br>
+			<a class="ln" href="/SpringFM/newAdmins">NEW ADMINS</a><br><br>
+			<a class="ln" href="/SpringFM/Suspended">Suspended</a><br><br>
+			<a class="ln" href="/SpringFM/Admins">ADMINS</a><br><br>
 			<a class="ln" href="/SpringFM/insertItem">Insert Items</a><br><br>
 			<a class="ln" href="/SpringFM/updateItem">Update Items</a><br><br>
-			<a class="ln" href="/SpringFM/deleteItem">Delete Items</a><br><br>
-			<a class="ln" href="/SpringFM/Homepage">Display Items</a><br><br><br><br>
+			<a class="ln" href="/SpringFM/deleteItem">Delete Items</a><br><br><br><br>
 		</div>
 		<a class="ln out" href="/SpringFM/AdminLogout" target="_parent">Logout </a><br><br>
 	</div>	

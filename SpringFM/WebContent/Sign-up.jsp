@@ -5,42 +5,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Sign-Up</title>
 	<jsp:include page="/links.jsp" />
-  <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
-  <script type="text/javascript" src="js/modernizr.custom.js"></script>
-  <script type="text/javascript" src="js/move-top.js"></script>
-  <script type="text/javascript" src="js/easing.js"></script>	
-  
-   <script type="text/javascript">
-	function validation() {
-		var name=document.loginForm.txt1.value;
-		var password=document.loginForm.txt2.value;
-		var city=document.loginForm.txt3.value;
-		var n1=name.split(' ').join('+');
-		var p1=password.split(' ').join('+');
-		var c1=city.split(' ').join('+');
-//		document.getElementById("errorMessage").innerHTML="Sign-Up Field should not be blank..";
-		if(name=="" || n1!=name){
-			document.getElementById("errorMessage").innerHTML="username Field should not be blank or Spaces..";
-			window.alert("username Field should not be blank or Spaces..");
-			document.loginForm.txt1.focus();
-			return false;
-		}
-		if(password=="" || p1!=password){
-			document.getElementById("errorMessage").innerHTML="password Field should not be blank or Spaces..";
-			window.alert("Password Field should not be blank or Spaces..");
-			document.loginForm.txt2.focus();
-			return false;
-		}
-		if(city=="" || c1!=city){
-			window.alert("city Field should not be blank or Spaces..");
-			document.getElementById("errorMessage").innerHTML="city Field should not be blank or Spaces..";
-			document.loginForm.txt3.focus();
-			return false;
-		}
-		return true;
-	}
-</script> 
-
+	<script type="text/javascript" src="js/validationSignUp.js"></script>	
+	
 </head>
 
 <body class="container regn-body">
@@ -55,16 +21,30 @@
 <br /><br>
 <h1>Registration form.....</h1>
 
-<form action="SignupCntl" name="loginForm" method="post" onsubmit='return(validation())'>
+<form action="/SpringFM/SignupCntl" name="loginForm" method="post" onsubmit='return(validation())'>
 
 	<div class="regn-reqms">		
+		<label id="uname">FirstName :</label>
+		<input class="input-uname" type="text" id="txt1" name="fname" required="required" /><br />
+		<label id="uname">LastName :</label>
+		<input class="input-uname" type="text" id="txt2" name="lname" required="required" /><br />
 		<label id="uname">UserName :</label>
-		<input class="input-uname" type="text" id="txt1" name="username" required="required" /><br />
+		<input class="input-uname" type="text" id="txt3" name="username" required="required" /><br />
 		<label id="pass">Password :</label> 
-		<input class="regn-input-pass" type="password" id="txt2" name="password" required="required" /><br />
+		<input class="regn-input-pass" type="password" id="txt4" name="password" required="required" /><br />
+		<label id="uname">Email :</label>
+		<input class="input-uname" type="text" id="txt5" name="email" required="required" /><br />
+		<label id="uname">Mobile :</label>
+		<input class="input-uname" type="text" id="txt6" name="contact" required="required" /><br />
+		<label id="uname">Pincode :</label>
+		<input class="input-uname" type="text" id="txt7" name="pincode" required="required" /><br />
 		<label id="city">City :</label> 
-		<input class="input-city" type="text" name="city" id="txt3" required="required" />
+		<input class="input-city" type="text" name="city" id="txt8" required="required" />
+		<input type="hidden" id="txt9" name="user" value="cust" required="required" />
 	</div>
+		
+		
+		
 			<div class="form-group">
            		<div class="col-sm-offset-2 col-sm-8">
                 	<span class="text-danger" id="errorMessage"></span>
@@ -76,7 +56,7 @@
     <input type="reset" value="Reset">
 </form>
 
-<form action="Login.jsp" >
+<form action="/SpringFM/" >
     <br><input type="submit" value="Cancel">
 </form>
     </center>

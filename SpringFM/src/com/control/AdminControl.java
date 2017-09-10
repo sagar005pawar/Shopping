@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.model.Products;
+import com.model.Shopping;
+import com.model.User;
 import com.service.ServiceIn;
 
 @org.springframework.stereotype.Controller
@@ -36,7 +38,7 @@ public class AdminControl {
 		sess.setAttribute("Products", (service.getProducts()).stream().collect(Collectors.toList()));
 		return new ModelAndView("Homepage");
 	}	
-
+	
 	@RequestMapping("/DisplayProductSections")
 	public ModelAndView home() {
 		try {			
@@ -45,7 +47,6 @@ public class AdminControl {
 		} catch (Exception e) {
 			return new ModelAndView("redirect:/AdminLogout");
 		}
-
 	}	
 	
 	@RequestMapping(value="/SectionItemsList/{type}", method=RequestMethod.GET)
@@ -161,14 +162,132 @@ public class AdminControl {
 			return new ModelAndView("InsertItem", "msg", p.getType() + " NOT Inserted...");
 		}
 	}
+	
+	@RequestMapping("/newAdmins")
+	public ModelAndView newAdmins() {
+		try {			
+			ModelAndView model = new ModelAndView("Admins");
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).collect(Collectors.toList()));
+			model.addObject("heading", "NEW Admins");
+			return model;
+		} catch (Exception e) {
+			return new ModelAndView("redirect:/AdminLogout");
+		}
+	}	
+	
+	@RequestMapping("/Suspended")
+	public ModelAndView Suspended() {
+		try {			
+			ModelAndView model = new ModelAndView("Admins");
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
+			model.addObject("heading", "Suspended Admins");
+			return model;
+		} catch (Exception e) {
+			return new ModelAndView("redirect:/AdminLogout");
+		}
+	}	
+
+	@RequestMapping("/Admins")
+	public ModelAndView admins() {
+		try {			
+			ModelAndView model = new ModelAndView("Admins");
+			model.addObject("users", service.getAuthorizedAdmins().stream().collect(Collectors.toList()));
+			model.addObject("heading", "Authorized Admins");
+			return model;
+		} catch (Exception e) {
+			return new ModelAndView("redirect:/AdminLogout");
+		}
+	}	
+	
+	@RequestMapping("/profile/{id}")
+	public ModelAndView profile(@PathVariable("id") int id) {		
+		return new ModelAndView("Profile", "urPro", service.getUser(id));
+	}
+		
+	@RequestMapping("/AdminApprove/{id}/{fromBy}")
+	public ModelAndView adminApprove(@PathVariable("id") int id, @PathVariable("fromBy") int fromBy) {
+		ModelAndView model = new ModelAndView("Admins");
+		if(service.adminApprove(id, fromBy)){
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
+			model.addObject("heading", "Authorized Admins");
+			model.addObject("msg", "Admin Approved= "+id);
+			return model;			
+		} else {
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
+			model.addObject("heading", "Authorized Admins");
+			model.addObject("msg", "Admin Approval= FAILED");
+			return model;			
+		}
+	}
+
+	@RequestMapping("/AdminUnApproval/{id}/{fromBy}")
+	public ModelAndView adminUnApproval(@PathVariable("id") int id, @PathVariable("fromBy") int fromBy) {
+		ModelAndView model = new ModelAndView("Admins");
+		if(service.AdminUnApproval(id, fromBy)) {
+			model.addObject("users", service.getAuthorizedAdmins().stream().collect(Collectors.toList()));
+			model.addObject("heading", "Authorized Admins");
+			model.addObject("msg", "Admin Suspended= "+id);
+			return model;			
+		} else {
+			model.addObject("users", service.getAuthorizedAdmins().stream().collect(Collectors.toList()));
+			model.addObject("heading", "Authorized Admins");
+			model.addObject("msg", "Admin Suspention= FAILED");
+			return model;			
+		}
+	}
+
+	@RequestMapping("/AdminRemoved/{id}")
+	public ModelAndView adminRemoved(@PathVariable("id") int id) {	
+		ModelAndView model = new ModelAndView("Admins");
+		if (service.AdminRemoved(id)) {
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
+			model.addObject("heading", "Authorized Admins");
+			model.addObject("msg", "Admin Removed= " + id);
+			return model;			
+		} else {
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
+			model.addObject("heading", "Authorized Admins");
+			model.addObject("msg", "Admin Removing= FAILED");
+			return model;			
+		}
+	}
+	
+	@RequestMapping("/ASignupCntl")
+	public ModelAndView asignupCntl(@ModelAttribute("user") User u, BindingResult br) { 
+		String msg = null;
+		if(br.hasErrors()){
+			System.out.println("errors= " + br.getErrorCount());
+			msg = "NOT Register ERROR in: " + br.getFieldError().getField();
+		}
+		if(!br.hasErrors()){
+			System.out.println(u);
+			service.SingupDAO(u);
+			msg = "Registered..";
+		}
+		return new ModelAndView("AdminLoginPage", "msg", msg);			
+	}			
+
 
 	@RequestMapping(value="/AdminLogin", method = RequestMethod.POST)
-	public ModelAndView validation(@RequestParam("usname") String usname, @RequestParam("pass") String pass) {
-		if(usname.equals("admin")&&pass.equals("test")){
-			sess.setAttribute("userLog", "login");
-			return new ModelAndView("AdminHomePage");						
+	public ModelAndView validation(@ModelAttribute User u, BindingResult br) {
+		if(br.hasErrors()){
+			return new ModelAndView("AdminLoginPage", "msg", br.getAllErrors());			
+		}
+		User u1 = service.validateUser(u);
+		if(u1.getUser().equals("admin")) {
+			if(u1.isAdmin()){
+				sess.setAttribute("userLog", "login");
+				sess.setAttribute("user", u1);
+				service.ShoppingTruncate();
+				Shopping T =  new Shopping();
+				T.setTotal(0.0d);
+				sess.setAttribute("total", T);
+				return new ModelAndView("AdminHomePage", "user", u1);										
+			} else {
+				return new ModelAndView("AdminLoginPage", "msg", "NOT Authorised..");
+			}
 		} else {
-			return new ModelAndView("AdminLoginPage");									
+			return new ModelAndView("AdminLoginPage", "msg", "NOT ADMIN..");									
 		}
 	}	
 

@@ -464,7 +464,7 @@ public class DAO implements DaoIn {
 		try {
 			this.session = sessionFactory.openSession();
 			this.session.beginTransaction();
-			this.session.saveOrUpdate(u1);;			
+			this.session.saveOrUpdate(u1);			
 		} catch (Exception e) {
 			this.exceptional();
 			System.err.println(e);
@@ -493,6 +493,135 @@ public class DAO implements DaoIn {
 		return u1;
 	}
 	
+	public List<User> getUnAuthorizedAdmins() {
+		List<User> a1 = new ArrayList<>();
+		try {		
+			this.session = sessionFactory.openSession();
+			this.session.beginTransaction();
+			String queryString = "from User where user = :user and admin = :admin";
+			org.hibernate.Query query = this.session.createQuery(queryString);
+			query.setString("user", "admin");
+			query.setBoolean("admin", false);
+			a1 = query.list();
+			return a1;
+		} catch (Exception e) {
+			this.exceptional();
+			System.err.println(e);
+		} finally {
+			this.closeSession();
+		}		
+		return null;
+	}
+	
+	public List<User> getAuthorizedAdmins() {
+		List<User> a1 = new ArrayList<>();
+		try {		
+			this.session = sessionFactory.openSession();
+			this.session.beginTransaction();
+			String queryString = "from User where user = :user and admin = :admin";
+			org.hibernate.Query query = this.session.createQuery(queryString);
+			query.setString("user", "admin");
+			query.setBoolean("admin", true);
+			a1 = query.list();
+			return a1;
+		} catch (Exception e) {
+			this.exceptional();
+			System.err.println(e);
+		} finally {
+			this.closeSession();
+		}		
+		return null;
+	}
+
+	public List<User> getCustomers() {
+		List<User> a1 = new ArrayList<>();
+		try {		
+			this.session = sessionFactory.openSession();
+			this.session.beginTransaction();
+			String queryString = "from User where user = :user";
+			org.hibernate.Query query = this.session.createQuery(queryString);
+			query.setString("user", "cust");
+			a1 = query.list();
+			return a1;
+		} catch (Exception e) {
+			this.exceptional();
+			System.err.println(e);
+		} finally {
+			this.closeSession();
+		}		
+		return null;
+	}
+
+	@Override
+	public User getUser(int id) {
+		try {		
+			this.session = sessionFactory.openSession();
+			this.session.beginTransaction();
+			String queryString = "from User where id = :id";
+			org.hibernate.Query query = this.session.createQuery(queryString);
+			query.setInteger("id", id);
+			Object queryResult = query.uniqueResult();
+			return ((User)queryResult);
+		} catch (Exception e) {
+			this.exceptional();
+			System.err.println(e);
+		} finally {
+			this.closeSession();
+		}		
+		return null;
+	}
+
+	public boolean adminApprove(int id, int fromBy){
+		try {
+			User u = getUser(id);
+			this.session = sessionFactory.openSession();
+			this.session.beginTransaction();
+			u.setAdmin(true);
+			u.setFromBy(fromBy);
+			this.session.update(u);
+			return true;
+		} catch (Exception e) {
+			this.exceptional();
+			System.err.println(e);
+		} finally {
+			this.closeSession();
+		}		
+		return false;
+	}
+	
+	public boolean AdminUnApproval(int id, int fromBy){
+		try {
+			User u = getUser(id);
+			this.session = sessionFactory.openSession();
+			this.session.beginTransaction();
+			u.setAdmin(false);
+			u.setFromBy(fromBy);
+			this.session.update(u);
+			return true;				
+		} catch (Exception e) {
+			this.exceptional();
+			System.err.println(e);
+		} finally {
+			this.closeSession();
+		}		
+		return false;
+	}
+
+	public boolean AdminRemoved(int id){
+		try {
+			User u = getUser(id);
+			this.session = sessionFactory.openSession();
+			this.session.beginTransaction();
+			this.session.delete(u);
+			return true;
+		} catch (Exception e) {
+			this.exceptional();
+			System.err.println(e);
+		} finally {
+			this.closeSession();
+		}		
+		return false;
+	}
 	
 	public List<Products> getProducts() {
 		ArrayList<Products> a1 = new ArrayList<Products>();
@@ -542,5 +671,7 @@ public class DAO implements DaoIn {
 			System.out.println("Hibernate SessionFactory closed..");
 		}
 	}
+
+
 
 }
