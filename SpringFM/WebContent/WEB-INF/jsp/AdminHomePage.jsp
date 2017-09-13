@@ -27,8 +27,6 @@
 	<div class="adminhome" align="center">
 		<div class="adminoperations" >
 			<a class="ln" href="/SpringFM/Homepage">Display Items</a><br><br>
-			<a class="ln" href="/SpringFM/newAdmins">NEW ADMINS</a><br><br>
-			<a class="ln" href="/SpringFM/Suspended">Suspended</a><br><br>
 			<a class="ln" href="/SpringFM/Admins">ADMINS</a><br><br>
 			<a class="ln" href="/SpringFM/insertItem">Insert Items</a><br><br>
 			<a class="ln" href="/SpringFM/updateItem">Update Items</a><br><br>

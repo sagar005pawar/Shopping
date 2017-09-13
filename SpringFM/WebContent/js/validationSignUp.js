@@ -57,5 +57,5 @@
 			document.loginForm.txt8.focus();
 			return false;
 		}
-		return true;
+//		return true;
 	}

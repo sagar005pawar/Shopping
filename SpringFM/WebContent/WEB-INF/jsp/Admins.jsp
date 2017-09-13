@@ -11,10 +11,14 @@
 
 	<div class="container text-center">
 		<br>
-		<h2>${heading }</h2>
-		<br><br><br>
-	<a href="/Spring/Homepage" class="btn btn-outline btn-success" target="_parent">Display-Products</a>
-	<a href="/SpringFM/AdminHome" class="btn btn-outline btn-primary" target="_parent">Admin Home</a>
+		<div class="productheading">${heading }</div>
+		<br><br>
+	<a href="/SpringFM/Homepage" class="btn btn-outline btn-success" >Display-Products</a> 
+	<label style="display: inline; font-size: 15px; margin: 0px 10px 0px 10px;"><a class="" href="/SpringFM/newAdmins">NEW ADMINS</a> | 
+	<a class="" href="/SpringFM/Suspended">Suspended</a> | 
+	<a class="" href="/SpringFM/Admins">ADMINS</a></label>
+	<a href="/SpringFM/AdminHome" class="btn btn-outline btn-primary">Admin Home</a>
+	<a class="btn btn-warning" href="/SpringFM/AdminLogout">Logout </a>
 	<br><br>
 		
 		<table class="table table-bordered table-striped table-hover table-responsive">
@@ -27,7 +31,7 @@
 				<th>Contact</th>
 				<th>City</th>
 				<th>Pincode</th>
-				<c:if test="${users[0].fromBy!=0 }">				
+				<c:if test="${users[0].fromBy!=0 }">
 				<th>FromBy</th>						<!-- for suspended & admins  -->
 				</c:if>
 				<c:if test="${!users[0].admin }">				
