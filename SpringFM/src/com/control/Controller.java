@@ -79,6 +79,11 @@ public class Controller {
 			return new ModelAndView("Wel");
 		}
 	}	
+	
+	@RequestMapping("/UserProfile/{id}")
+	public ModelAndView profile(@PathVariable("id") int id) {		
+		return new ModelAndView("UserProfile", "urPro", service.getUser(id));
+	}
 
 	@RequestMapping("/searchAJAX/{term}")
 	public void searchAJAX(HttpServletResponse resp, @PathVariable("term") String term) {

@@ -6,16 +6,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Profile</title>
 	<jsp:include page="/links.jsp" />
+	<link rel="stylesheet" href='<c:url value="https://www.w3schools.com/w3css/4/w3.css"></c:url>'  />
 </head>
 <body>
 	<div class="container text-center">
-		<br>
-		<h2>PROFILE</h2>
-		<br><br>
-		<a href="/Spring/Homepage" class="btn btn-outline btn-success" target="_parent">Display-Products</a>
+		<div class="productheading">PROFILE</div>
+		<a href="/SpringFM/Homepage" class="btn btn-outline btn-success" target="_parent">Display-Products</a> 
 		<a href="/SpringFM/AdminHome" class="btn btn-outline btn-primary" target="_parent">Admin Home</a>
 		<br><br>
-		<table class="table table-bordered table-striped table-hover table-responsive">
+		<table class="w3-table w3-responsive w3-black w3-card-4">
 			<tbody>
 				<tr>
 					<th>ID</th>

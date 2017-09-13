@@ -2,7 +2,7 @@ package com.model;
 
 import java.io.Serializable;
 
-public class User implements Serializable, Cloneable {
+public class User implements Serializable, Cloneable, Comparable<User> {
 
 	private int id;
 	private String fname;
@@ -237,6 +237,11 @@ public class User implements Serializable, Cloneable {
 		} else if (!username.equals(other.username))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(User o) {
+		return this.id-o.id;
 	}
 
 

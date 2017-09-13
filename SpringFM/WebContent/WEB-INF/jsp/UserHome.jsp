@@ -24,7 +24,9 @@
 <center>
 	<h2 style="font-family: Stencil">Shop SECTIOS</h2><br />
 	<div style="font-family: AR JULIAN;">You can choice any section here for it should take, What are the requirments of us...?</div>
+		<a href="/SpringFM/UserProfile/${user.id }" target="frame3" >${user.fname }</a>
 	<br>
+	
 	<c:forEach var="s" items="${sc }" varStatus="status">
 		<h3><a class="section slink" href="SectionItemsListToUser/${s }" target="frame3">${s }</a></h3>
 	</c:forEach>

@@ -53,7 +53,7 @@ public class AdminControl {
 	public ModelAndView sectionItemsList(@PathVariable("type") String type) {
 		try {
 			System.out.println("SectionItemsListToUser.. "+ type);
-			sess.setAttribute("asi", (service.getProducts()).stream().filter(p->p.getType().equals(type)).sorted((h1, h2)->h1.getPrName().compareToIgnoreCase(h2.getPrName())).collect(Collectors.toList()));
+			sess.setAttribute("asi", (service.getProducts()).stream().filter(p->p.getType().equals(type)).sorted().collect(Collectors.toList()));
 			return new ModelAndView("Products");
 		} catch (Exception e) {
 			return new ModelAndView("Wel");
@@ -167,7 +167,7 @@ public class AdminControl {
 	public ModelAndView newAdmins() {
 		try {			
 			ModelAndView model = new ModelAndView("Admins");
-			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).collect(Collectors.toList()));
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).sorted().collect(Collectors.toList()));
 			model.addObject("heading", "NEW Admins");
 			return model;
 		} catch (Exception e) {
@@ -179,26 +179,38 @@ public class AdminControl {
 	public ModelAndView Suspended() {
 		try {			
 			ModelAndView model = new ModelAndView("Admins");
-			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).sorted().collect(Collectors.toList()));
 			model.addObject("heading", "Suspended Admins");
 			return model;
 		} catch (Exception e) {
 			return new ModelAndView("redirect:/AdminLogout");
 		}
 	}	
-
+	
 	@RequestMapping("/Admins")
 	public ModelAndView admins() {
 		try {			
 			ModelAndView model = new ModelAndView("Admins");
-			model.addObject("users", service.getAuthorizedAdmins().stream().collect(Collectors.toList()));
+			model.addObject("users", service.getAuthorizedAdmins().stream().sorted().collect(Collectors.toList()));
 			model.addObject("heading", "Authorized Admins");
 			return model;
 		} catch (Exception e) {
 			return new ModelAndView("redirect:/AdminLogout");
 		}
 	}	
-	
+
+	@RequestMapping("/Customers")
+	public ModelAndView customers() {
+		try {			
+			ModelAndView model = new ModelAndView("Admins");
+			model.addObject("users", service.getCustomers().stream().sorted().collect(Collectors.toList()));
+			model.addObject("heading", "Shop-CustomerS");
+			return model;
+		} catch (Exception e) {
+			return new ModelAndView("redirect:/AdminLogout");
+		}
+	}	
+
 	@RequestMapping("/profile/{id}")
 	public ModelAndView profile(@PathVariable("id") int id) {		
 		return new ModelAndView("Profile", "urPro", service.getUser(id));
@@ -208,82 +220,93 @@ public class AdminControl {
 	public ModelAndView newAdminApprove(@PathVariable("id") int id, @PathVariable("fromBy") int fromBy) {
 		ModelAndView model = new ModelAndView("Admins");
 		if(service.adminApprove(id, fromBy)){
-			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).collect(Collectors.toList()));
 			model.addObject("heading", "NEW Admins");
 			model.addObject("msg", "Admin Approved= "+id);
-			return model;			
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).sorted().collect(Collectors.toList()));
 		} else {
-			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).collect(Collectors.toList()));
 			model.addObject("heading", "NEW Admins");
 			model.addObject("msg", "Admin Approval= FAILED");
-			return model;			
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).collect(Collectors.toList()));
 		}
+		return model;			
 	}
 
 	@RequestMapping("/AdminApprove/{id}/{fromBy}")
 	public ModelAndView adminApprove(@PathVariable("id") int id, @PathVariable("fromBy") int fromBy) {
 		ModelAndView model = new ModelAndView("Admins");
 		if(service.adminApprove(id, fromBy)){
-			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
 			model.addObject("heading", "Suspended Admins");
 			model.addObject("msg", "Admin Approved= "+id);
-			return model;			
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).sorted().collect(Collectors.toList()));
 		} else {
-			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
 			model.addObject("heading", "Suspended Admins");
 			model.addObject("msg", "Admin Approval= FAILED");
-			return model;			
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).sorted().collect(Collectors.toList()));
 		}
+		return model;			
 	}
 
 	@RequestMapping("/AdminUnApproval/{id}/{fromBy}")
 	public ModelAndView adminUnApproval(@PathVariable("id") int id, @PathVariable("fromBy") int fromBy) {
 		ModelAndView model = new ModelAndView("Admins");
 		if(service.AdminUnApproval(id, fromBy)) {
-			model.addObject("users", service.getAuthorizedAdmins().stream().collect(Collectors.toList()));
 			model.addObject("heading", "Authorized Admins");
 			model.addObject("msg", "Admin Suspended= "+id);
-			return model;			
+			model.addObject("users", service.getAuthorizedAdmins().stream().sorted().collect(Collectors.toList()));
 		} else {
-			model.addObject("users", service.getAuthorizedAdmins().stream().collect(Collectors.toList()));
 			model.addObject("heading", "Authorized Admins");
 			model.addObject("msg", "Admin Suspention= FAILED");
-			return model;			
+			model.addObject("users", service.getAuthorizedAdmins().stream().sorted().collect(Collectors.toList()));
 		}
+		return model;			
 	}
 
 	@RequestMapping("/SuspendAdminRemoved/{id}")
 	public ModelAndView suspendAdminRemoved(@PathVariable("id") int id) {	
 		ModelAndView model = new ModelAndView("Admins");
 		if (service.AdminRemoved(id)) {
-			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
 			model.addObject("heading", "Suspended Admins");
 			model.addObject("msg", "Admin Removed= " + id);
-			return model;			
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).sorted().collect(Collectors.toList()));
 		} else {
-			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).collect(Collectors.toList()));
 			model.addObject("heading", "Suspended Admins");
 			model.addObject("msg", "Admin Removing= FAILED");
-			return model;			
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()!=0).sorted().collect(Collectors.toList()));
 		}
+		return model;			
 	}
 		
 	@RequestMapping("/AdminRemoved/{id}")
 	public ModelAndView adminRemoved(@PathVariable("id") int id) {	
 		ModelAndView model = new ModelAndView("Admins");
 		if (service.AdminRemoved(id)) {
-			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).collect(Collectors.toList()));
 			model.addObject("heading", "NEW Admins");
 			model.addObject("msg", "Admin Removed= " + id);
-			return model;			
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).sorted().collect(Collectors.toList()));
 		} else {
-			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).collect(Collectors.toList()));
 			model.addObject("heading", "NEW Admins");
 			model.addObject("msg", "Admin Removing= FAILED");
-			return model;			
+			model.addObject("users", service.getUnAuthorizedAdmins().stream().filter(p->p.getFromBy()==0).sorted().collect(Collectors.toList()));
 		}
+		return model;			
 	}
 
+	@RequestMapping("/CustomerRemoved/{id}")
+	public ModelAndView customersRemoved(@PathVariable("id") int id) {	
+		ModelAndView model = new ModelAndView("Admins");
+		if (service.AdminRemoved(id)) {
+			model.addObject("heading", "Shop-CustomerS");
+			model.addObject("msg", "Customer Removed= " + id);
+			model.addObject("users", service.getCustomers().stream().sorted().collect(Collectors.toList()));
+		} else {
+			model.addObject("heading", "Shop-CustomerS");
+			model.addObject("msg", "Customer Removing= FAILED");
+			model.addObject("users", service.getCustomers().stream().sorted().collect(Collectors.toList()));
+		}
+		return model;
+	}
+
+	
 	@RequestMapping("/ASignupCntl")
 	public ModelAndView asignupCntl(@ModelAttribute("user") User u, BindingResult br) { 
 		String msg = null;
