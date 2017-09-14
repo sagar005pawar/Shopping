@@ -224,7 +224,37 @@ public class Controller {
 			return new ModelAndView("Wel");
 		}
 	}	
-	
+		
+	@RequestMapping("/ChangePassword")
+	public ModelAndView changePassword(@ModelAttribute("user") User u, BindingResult br) {
+		ModelAndView model = new ModelAndView("UserProfile");
+		if(br.hasErrors()) {
+			System.out.println("errors= " + br.getErrorCount());
+		}
+		if(!br.hasErrors()) {
+			u=service.changePassword(u);
+			model.addObject("urPro", u);
+			model.addObject("msg", "Password Changed..!");
+			sess.setAttribute("user", u);				
+		}
+		return model;
+	}			
+
+	@RequestMapping("/SaveChanges")
+	public ModelAndView saveChanges(@ModelAttribute("user") User u, BindingResult br) { 
+		ModelAndView model = new ModelAndView("UserProfile");
+		if(br.hasErrors()) {
+			System.out.println("errors= " + br.getErrorCount());
+		}
+		if(!br.hasErrors()) {
+			u=service.saveChanges(u);
+			model.addObject("urPro", u);
+			model.addObject("msg", "User Modified..");
+			sess.setAttribute("user", u);
+		}
+		return model;
+	}			
+
 	@RequestMapping("/SignupCntl")
 	public ModelAndView signupCntl(@ModelAttribute("user") User u, BindingResult br) {
 		String msg = null;

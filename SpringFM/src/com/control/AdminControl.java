@@ -211,6 +211,36 @@ public class AdminControl {
 		}
 	}	
 
+	@RequestMapping("/AdChangePassword")
+	public ModelAndView changePassword(@ModelAttribute("user") User u, BindingResult br) {
+		ModelAndView model = new ModelAndView("Profile");
+		if(br.hasErrors()) {
+			System.out.println("errors= " + br.getErrorCount());
+		}
+		if(!br.hasErrors()) {
+			u=service.changePassword(u);
+			model.addObject("urPro", u);
+			model.addObject("msg", "Password Changed..!");
+			sess.setAttribute("user", u);				
+		}
+		return model;
+	}			
+
+	@RequestMapping("/AdSaveChanges")
+	public ModelAndView saveChanges(@ModelAttribute("user") User u, BindingResult br) { 
+		ModelAndView model = new ModelAndView("Profile");
+		if(br.hasErrors()) {
+			System.out.println("errors= " + br.getErrorCount());
+		}
+		if(!br.hasErrors()) {
+			u=service.saveChanges(u);
+			model.addObject("urPro", u);
+			model.addObject("msg", "User Modified..!");
+			sess.setAttribute("user", u);
+		}
+		return model;
+	}			
+
 	@RequestMapping("/profile/{id}")
 	public ModelAndView profile(@PathVariable("id") int id) {		
 		return new ModelAndView("Profile", "urPro", service.getUser(id));

@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Profile</title>
 	<jsp:include page="/links.jsp" />
+	<script type="text/javascript" src="js/validationSignUp.js"></script>
 	<link rel="stylesheet" href='<c:url value="https://www.w3schools.com/w3css/4/w3.css"></c:url>'  />
 </head>
 <body>
@@ -13,44 +14,40 @@
 		<div class="productheading">PROFILE</div>
 		<a href="/SpringFM/Homepage" class="btn btn-outline btn-success" target="_parent">Display-Products</a> 
 		<a href="/SpringFM/AdminHome" class="btn btn-outline btn-primary" target="_parent">Admin Home</a>
+		<input onclick="window.location.href='/SpringFM/AdminLogout'" type="button" class="btn btn-warning" value="Logout" />
 		<br><br>
-		<table class="w3-table w3-responsive w3-black w3-card-4">
+		<form action="/SpringFM/AdSaveChanges" class="w3-card-4" name="loginForm" method="post" onsubmit='return(validation())'>
+		<table class="w3-table w3-responsive w3-grey">
 			<tbody>
 				<tr>
 					<th>ID</th>
-					<td>${urPro.id }</td>
+					<td>${urPro.id }
+						<input type="hidden" id="id" name="id" value="${urPro.id }" required="required" />
+					</td>
 				</tr>
 				<tr>
 					<th>First Name</th>
-					<td>${urPro.fname }</td>
+					<td><input type="text" id="txt1" name="fname" value="${urPro.fname }" required="required"  /></td>
 				</tr>
 				<tr>
 					<th>Last Name</th>
-					<td>${urPro.lname }</td>
+					<td><input type="text" id="txt2" name="lname" value="${urPro.lname }" required="required"  /></td>
 				</tr>
 				<tr>
 					<th>Email</th>
-					<td>${urPro.email }</td>
+					<td><input type="email" id="txt5" name="email" title="Contact's email (format: xxx@xxx.xxx)" required="required" value="${urPro.email }"  /></td>
 				</tr>
 				<tr>
 					<th>Contact</th>
-					<td>${urPro.contact }</td>
+					<td><input title="Enter Mobile/Contact Number" pattern="[789][0-9]{9}" type="text" id="txt6" name="contact" value="${urPro.contact }" required="required"  /></td>
 				</tr>
 				<tr>
 					<th>City</th>
-					<td>${urPro.city }</td>
+					<td><input title="Enter your City" type="text" name="city" id="txt8" value="${urPro.city }" required="required"  /></td>
 				</tr>
 				<tr>
 					<th>Pincode</th>
-					<td>${urPro.pincode }</td>
-				</tr>
-				<tr>
-					<th>User</th>
-					<td>${urPro.user }</td>
-				</tr>
-				<tr>
-					<th>Admin</th>
-					<td>${urPro.admin }</td>
+					<td><input title="Enter City Pin/ZIP Code" pattern="[0-9]{6}" type="text" id="txt7" name="pincode" value="${urPro.pincode }" required="required"  /></td>
 				</tr>
 				<tr>
 					<th>FromBy</th>
@@ -58,8 +55,78 @@
 				</tr>				
 			</tbody>
 		</table>
- 	    	<br><input onclick="history.back()" class="btn btn-outline btn-black"  type="button" value=" BACK " /><br><br>     
-		
+ 	    	<br>
+ 	    	<input class="btn btn-outline btn-black"  type="submit" value="Save Changes" />
+ 	    	<input onclick="window.scrollBy(0, 350)" class="btn btn-outline btn-black"  type="button" value="Change Password" />
+ 	    	<input onclick="history.back()" class="btn btn-outline btn-black"  type="button" value=" BACK " />
+ 	    	<span style="color: red; font-weight: bold;">${msg }</span>
+ 	    	<br><br>
+		</form>
+
+ 	    <br><br><br><br><br>
+
+		<form action="/SpringFM/AdChangePassword" class="w3-card-4" name="changeForm" method="post" onsubmit='return(validationPass())'>
+		<table class="w3-table w3-responsive w3-grey">
+			<tbody>
+				<tr>
+					<th>Current Password</th>
+					<td>
+						<input type="hidden" id="txt4" name="chPassword" value="${urPro.password }" required="required" />
+						<input type="hidden" id="id" name="id" value="${urPro.id }" required="required" />
+						<input type="password" id="txt4" name="cnPassword" required="required" />
+					</td>
+				</tr>
+				<tr>
+					<th>NEW Password</th>
+					<td>
+						<input type="password" id="txt4" name="nPassword" required="required" />
+					</td>
+				</tr>
+				<tr>
+					<th>Confirm </th>
+					<td>
+						<input type="password" id="txt4" name="password" required="required" />
+					</td>
+				</tr>				
+			</tbody>
+		</table>
+ 	    	<br>
+ 	    	<input class="btn btn-outline btn-black"  type="submit" value="Change Password" />
+ 	    	<input onclick="window.scrollBy(0, -350)" class="btn btn-outline btn-black"  type="button" value="PROFILE" /> 	    	
+ 	    	<input onclick="history.back()" class="btn btn-outline btn-black"  type="button" value=" BACK " />
+ 	    	<br><br>
+ 	    	<span id="passerr" style="color: red; font-weight: bold;"></span>
+ 	    	<span id="msg" style="color: red; font-weight: bold;">${msg }</span>
+ 	    	<br><br>
+ 	    </form>
+ 	    <br><br>
 	</div>
+	
+<script type="text/javascript">
+function validationPass() {
+	var pass = document.changeForm.chPassword.value;
+	var cnpass = document.changeForm.cnPassword.value;
+	var nwpass = document.changeForm.nPassword.value;
+	var cmpass = document.changeForm.password.value;
+	if(pass!=cnpass){
+		document.getElementById("passerr").innerText = "Current password didn't Matched!";
+		return false;
+	}
+	
+	if(nwpass!=cmpass){
+		document.getElementById("passerr").innerText = "NEW & Confirm password's Not Matched!";
+		return false;
+	}
+
+	if(nwpass==cmpass){
+		if(pass==nwpass){
+			document.getElementById("passerr").innerText = "We need to enter the new Password..!";
+			return false;			
+		}
+	}
+
+}
+</script>
 </body>
 </html>
+

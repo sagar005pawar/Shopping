@@ -28,6 +28,7 @@
 		<div class="adminoperations" >
 			<a class="ln" href="/SpringFM/Homepage">Display Items</a><br><br>
 			<a class="ln" href="/SpringFM/Admins">ADMINS</a><br><br>
+			<a class="ln" href="/SpringFM/profile/${user.id }">PROFILE</a><br><br>
 			<a class="ln" href="/SpringFM/insertItem">Insert Items</a><br><br>
 			<a class="ln" href="/SpringFM/updateItem">Update Items</a><br><br>
 			<a class="ln" href="/SpringFM/deleteItem">Delete Items</a><br><br><br><br>

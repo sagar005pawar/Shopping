@@ -23,6 +23,7 @@
 <center>
 	<h2 style="font-family: Stencil">Shop SECTIOS</h2><br />
 		<div style="font-family: AR JULIAN;">You can choice any section here for it should take, What are the requirments of us...?</div>
+		<a href="/SpringFM/profile/${user.id }" target="_parent" >${user.fname } ${user.lname }</a>
 		<br>
 		
 		<c:forEach var="s" items="${sc }" varStatus="status">

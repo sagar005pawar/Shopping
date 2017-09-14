@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.jws.soap.SOAPBinding.Use;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -458,7 +461,44 @@ public class DAO implements DaoIn {
 		}		
 		return a1;
 	}	
+
+	public User changePassword(User u1){
+		User u = getUser(u1.getId());
+		try {
+			u.setPassword(u1.getPassword());
+			this.session = sessionFactory.openSession();
+			this.session.beginTransaction();
+			this.session.update(u);		
+			return u;
+		} catch (Exception e) {
+			this.exceptional();
+			System.err.println(e);
+			return null;
+		} finally {
+			this.closeSession();
+		}
+	}
 	
+	public User saveChanges(User u1) {
+		User u = getUser(u1.getId());
+		try {
+			u.setFname(u1.getFname());
+			u.setLname(u1.getLname());
+			u.setEmail(u1.getEmail());
+			u.setContact(u1.getContact());
+			u.setPincode(u1.getPincode());
+			u.setCity(u1.getCity());
+			this.session = sessionFactory.openSession();
+			this.session.beginTransaction();
+			this.session.update(u);		
+		} catch (Exception e) {
+			this.exceptional();
+			System.err.println(e);
+		} finally {
+			this.closeSession();
+		}		
+		return u;
+	}
 
 	public User SingupDAO(User u1) {
 		try {

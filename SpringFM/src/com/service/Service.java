@@ -150,5 +150,15 @@ public class Service implements ServiceIn {
 	public boolean adminApprove(int id, int fromBy) {
 		return this.dao.adminApprove(id, fromBy);
 	}
+
+	@Override
+	public User saveChanges(User u1) {
+		return this.dao.saveChanges(u1);
+	}
+
+	@Override
+	public User changePassword(User u1) {
+		return this.dao.changePassword(u1);
+	}
 		
 }

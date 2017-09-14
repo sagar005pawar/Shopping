@@ -32,6 +32,7 @@ public interface ServiceIn {
 	public boolean AdminUnApproval(int id, int fromBy);
 	public boolean AdminRemoved(int id);
 	public boolean adminApprove(int id, int fromBy);
-	
+	public User saveChanges(User u1);	
+	public User changePassword(User u1);
 	
 }
