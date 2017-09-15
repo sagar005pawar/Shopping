@@ -186,8 +186,7 @@ a.section {
 .btn.btn-outline.btn-black:HOVER {
     color: #fff;
     background-color: #333;
-    border-color: #000000;
-	
+    border-color: #000000;	
 }
 
 .btn-info.btn-outline {
@@ -195,6 +194,36 @@ a.section {
     border-color: #5bc0de; 
 }
 
+.btn.btn-outline.btn-success {
+    color: #333;
+    background-color: inherit;
+    border-color: #333;	
+}
+.btn.btn-outline.btn-success:HOVER {
+    color: #fff;
+    background-color: #009b4e;
+    border-color: #009b4e;	
+}
+.btn.btn-outline.btn-primary {
+    color: #333;
+    background-color: inherit;
+    border-color: #333;	
+}
+.btn.btn-outline.btn-primary:HOVER {
+    color: #fff;
+    background-color: #0080c0;
+    border-color: #0080c0;	
+}
+.btn.btn-outline.btn-warning {
+    color: #333;
+    background-color: inherit;
+    border-color: #333;	
+}
+.btn.btn-outline.btn-warning:HOVER {
+    color: #fff;
+    background-color: orange;
+    border-color: orange;	
+}
  
  .welcome-body {
 /* 	background-color: pink;	*/	
@@ -394,7 +423,13 @@ label.lp {
 	}
 	
 .regn-body {
-	background-color: lightgreen;
+	width: auto;
+	height: 100%;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../Images/wallpaper.jpg");     
 }	
 
 table.regn-table {

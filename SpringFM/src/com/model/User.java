@@ -15,28 +15,7 @@ public class User implements Serializable, Cloneable, Comparable<User> {
 	private String pincode;
 	private String user;
 	private boolean admin;
-	private int fromBy;
-	
-/*	 */	
-	private String newPassword;
-	private String cPassword;
-
-	public String getNewPassword() {
-		return newPassword;
-	}
-
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
-
-	public String getcPassword() {
-		return cPassword;
-	}
-
-	public void setcPassword(String cPassword) {
-		this.cPassword = cPassword;
-	}
-/*	*/	
+	private int fromBy;	
 	
 	public int getId() {
 		return id;
