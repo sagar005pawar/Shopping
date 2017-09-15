@@ -11,16 +11,10 @@
 </head>
 <body class="container homesec">
 <%
-	//Back Button Cache Disable
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");				
-
 	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
 		response.sendRedirect("/SpringFM/logout");
 	} 
 %>
-
 <center>
 	<h2 style="font-family: Stencil">Shop SECTIOS</h2><br />
 	<div style="font-family: AR JULIAN;">You can choice any section here for it should take, What are the requirments of us...?</div>

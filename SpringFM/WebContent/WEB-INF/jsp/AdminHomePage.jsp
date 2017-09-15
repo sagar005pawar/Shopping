@@ -13,16 +13,10 @@
 
 <body class="container adminHomepage" >
 <%
-	//Back Button Cache Disable
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");				
 	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
 		response.sendRedirect("/SpringFM/AdminLogout");
 	} 
-
 %>
-
 	<br><br><br><div style=" font-size: 38px; text-align: center; color: white; font-family: Castellar;"><u>Admin-Home</u></div><br><br>
 	<div class="adminhome" align="center">
 		<div class="adminoperations" >

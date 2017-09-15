@@ -12,16 +12,6 @@
 	<jsp:include page="links.jsp" />
 </head>
 <body class="container Welbody">
-<% 
-	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
-		response.sendRedirect("/SpringFM/logout");
-	} 
-	//Back Button Cache Disable
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");				
-%>
-
     <center>   
     
     	<div class="Welheading">

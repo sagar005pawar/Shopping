@@ -6,11 +6,6 @@
 <title>Border</title>
 </head>
 <body class="container" bgcolor="yellow">
-<%
-	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
-		response.sendRedirect("/SpringFM/logout");
-	} 
-%>
 
 </body>
 </html>

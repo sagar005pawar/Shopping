@@ -13,11 +13,6 @@
 </head>
 <body class="container-fluid heading" ng-app="myApp" ng-controller="control">
 <%
-	//Back Button Cache Disable
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");				
-
 	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
 		response.sendRedirect("/SpringFM/logout");
 	} 

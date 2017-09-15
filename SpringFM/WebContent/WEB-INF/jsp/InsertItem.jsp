@@ -9,16 +9,10 @@
 </head>
 <body class="container">
 <%
-	//Back Button Cache Disable
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");	
 	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
 		response.sendRedirect("/SpringFM/AdminLogout");
 	} 
-
 %>
-
 <center>
 	<form action="/SpringFM/ItemInserting" method="post" onsubmit="return confirm('Are you sure you want to Insert the item?');">
 	<br><h2 style="font-family: Algerian">Product Inserting</h2><br><br><br>
@@ -46,8 +40,8 @@
 </table>
 </form>
 	<br><br><br>
-	<a href="/SpringFM/Homepage" class="btn btn-outline btn-success" target="_parent">Display-Products</a>
-	<a href="/SpringFM/AdminHome" class="btn btn-outline btn-primary" target="_parent">Admin Home</a>
+	<a href="/SpringFM/Homepage" class="btn btn-success" target="_parent">Display-Products</a>
+	<a href="/SpringFM/AdminHome" class="btn btn-primary" target="_parent">Admin Home</a>
 
 	<br><br><br><br>
 	<h3>${msg }</h3>

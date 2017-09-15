@@ -1,64 +1,117 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ page errorPage="error.jsp" language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Admin-Sign-Up</title>
-<jsp:include page="/links.jsp" />
+	<title>Admin-Sign-Up</title>
+	<jsp:include page="/links.jsp" />
 	<script type="text/javascript" src="js/validationSignUp.js"></script>	
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"  />
 </head>
-<body>
+
 <body class="container regn-body">
 <%
-	//Back Button Cache Disable
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");				
+	if(!(session.isNew() || (session.getAttribute("userLog")!="login"))) {
+		response.sendRedirect("/SpringFM/AdminLogout");
+	} 
 %>
-
 <center>
-<br /><br>
-<h1>Admin Registration form.....</h1>
-
-<form action="/SpringFM/ASignupCntl" name="loginForm" method="post" onsubmit='return(validation())'>
-
-	<div class="regn-reqms">		
-		<label id="uname">FirstName :</label>
-		<input class="input-uname" title="Enter First-Name" type="text" id="txt1" name="fname" required="required" /><br />
-		<label id="uname">LastName :</label>
-		<input class="input-uname" title="Enter Last-Name" type="text" id="txt2" name="lname" required="required" /><br />
-		<label id="uname">UserName :</label>
-		<input class="input-uname" title="Enter the UserName" type="text" id="txt3" name="username" required="required" /><br />
-		<label id="pass">Password :</label> 
-		<input class="regn-input-pass" title="Enter the Password" type="password" id="txt4" name="password" required="required" /><br />
-		<label id="uname">Email :</label>
-		<input class="input-uname" type="email" id="txt5" name="email" title="Contact's email (format: xxx@xxx.xxx)" required="required" /><br />
-		<label id="uname">Mobile :</label>
-		<input class="input-uname" title="Enter 10-digits Mobile/Contact Number" pattern="[789][0-9]{9}" type="text" id="txt6" name="contact" required="required" /><br />
-		<label id="uname">Pincode :</label>
-		<input class="input-uname" title="Enter your City Pin/ZIP Code" pattern="[0-9]{6}" type="text" id="txt7" name="pincode" required="required" /><br />
-		<label id="city">City :</label> 
-		<input class="input-city" title="Enter your City" type="text" name="city" id="txt8" required="required" />
-		<input type="hidden" id="txt9" name="user" value="cust" required="required" />
-	</div>
-		
-		
-		
-			<div class="form-group">
-           		<div class="col-sm-offset-2 col-sm-8">
-                	<span class="text-danger" id="errorMessage"></span>
-            	</div>
-            </div>
-	
-<br />
-	<input type="submit"  value="Register" name="txt5">
-    <input type="reset" value="Reset">
+<form class="form-horizontal w3-card-4 w3-light-blue" action="/SpringFM/ASignupCntl" name="loginForm" method="post" onsubmit='return(validation())'>
+	<div class="productheading">ADMIN RegistratioN</div>
+    <div class="form-group">
+      <div class="col-sm-4 col-sm-offset-4">
+      	<div class="input-group">
+		    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+	        <input id="fname" name="fname" type="text" placeholder="Enter your First Name" title="Enter your First Name" class="form-control" required="required">
+	        <span id="errfname"></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-4 col-sm-offset-4">
+        <div class="input-group">
+		    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        	<input id="lname" name="lname" type="text" placeholder="Enter your SureName" title="Enter your LastName/SureName" class="form-control" required="required">
+	        <span id="errlname"></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-4 col-sm-offset-4">
+        <div class="input-group">
+		    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+	        <input id="username" name="username" type="text" placeholder="Enter your UserName" title="Enter your UserName" class="form-control" required="required">
+	        <span id="erruname"></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-4 col-sm-offset-4">
+        <div class="input-group">
+		    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+	        <input id="password" name="password" type="password" placeholder="Enter Password" title="Enter Password" class="form-control" required="required">
+	        <span id="errpass"></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-4 col-sm-offset-4">
+        <div class="input-group">
+		    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+	        <input id="repassword" name="repassword" type="password" placeholder="Re-Enter Password" title="Re-Enter Password" class="form-control" required="required">
+	        <span id="errpass"></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group ">
+      <div class="col-sm-4 col-sm-offset-4">
+      	<div class="input-group">
+		    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+	        <input id="email" name="email" type="email" placeholder="Enter your Email ID" title="Enter your Email ID" class="form-control" required="required">
+	        <span id="erremail"></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-4 col-sm-offset-4">
+        <div class="input-group">
+		    <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+	        <input id="contact" name="contact" type="text" placeholder="Enter Mobile/Contact Number" title="Enter Mobile/Contact Number" pattern="[789][0-9]{9}" class="form-control" required="required">
+	        <span id="errcon"></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-4 col-sm-offset-4">
+        <div class="input-group">
+		    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+	        <input id="city" name="city" type="text" placeholder="Enter your City" title="Enter your City" class="form-control" required="required">
+	        <span id="errcity"></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-4 col-sm-offset-4">
+        <div class="input-group">
+		    <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+	        <input id="pincode" name="pincode" type="text" pattern="[0-9]{6}" placeholder="Enter City Pin/Zip Code" title="Enter City Pin/Zip Code" class="form-control" required="required">
+	        <span id="errpin"></span>
+        </div>
+      </div>
+    </div>
+	<input type="hidden" id="user" name="user" value="cust" required="required" />
+	<div class="form-group">
+    	<div class="col-sm-offset-2 col-sm-8">
+      		<span class="text-danger" id="errorMessage"></span>
+      	</div>
+   	</div>
+	<input class="btn btn-outline btn-success" type="submit"  value="Register" name="txt5">
+    <input class="btn btn-outline btn-warning" type="reset" value="Reset">
+    <a class="btn btn-outline btn-primary" href="/SpringFM/Admin">Login</a>
+    <br><br>
 </form>
-
-<form action="/SpringFM/Admin" >
-    <br><input type="submit" value="Cancel">
-</form>
-    </center>
-
+</center>
 </body>
 </html>
+

@@ -9,16 +9,20 @@
 	<link rel="stylesheet" href='<c:url value="https://www.w3schools.com/w3css/4/w3.css"></c:url>'  />
 </head>
 <body>
-
+<%
+	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
+		response.sendRedirect("/SpringFM/AdminLogout");
+	} 
+%>
 	<div class="w3-container text-center">
 		<div class="productheading">${heading }</div>
 		<br>
-	<a href="/SpringFM/Homepage" class="btn btn-outline btn-success" >Display-Products</a> 
+	<a href="/SpringFM/Homepage" class="btn btn-success" >Display-Products</a> 
 	<label style="display: inline; font-size: 15px; margin: 0px 10px 0px 10px;"><a class="" href="/SpringFM/newAdmins">NEW ADMINS</a> | 
 	<a class="" href="/SpringFM/Suspended">Suspended</a> | 
 	<a class="" href="/SpringFM/Admins">ADMINS</a> | 
 	<a class="" href="/SpringFM/Customers">Customers</a></label>	
-	<a href="/SpringFM/AdminHome" class="btn btn-outline btn-primary">Admin Home</a>
+	<a href="/SpringFM/AdminHome" class="btn btn-primary">Admin Home</a>
 	<input onclick="window.location.href='/SpringFM/AdminLogout'" type="button" class="btn btn-warning" value="Logout" />
 	<br><br>
 		

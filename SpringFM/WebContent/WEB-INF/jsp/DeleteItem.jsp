@@ -8,15 +8,10 @@
 </head>
 <body class="container">
 <%
-	//Back Button Cache Disable
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");				
 	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
 		response.sendRedirect("/SpringFM/AdminLogout");
 	} 
 %>
-
 <center>
 	<br><h2 style="font-family: Algerian">Product Deleting</h2><br><br><br>
 
@@ -41,8 +36,8 @@
 	</form>
 	
 	<br><br><br>
-	<a href="/SpringFM/Homepage" class="btn btn-outline btn-success" target="_parent">Display-Products</a>
-	<a href="/SpringFM/AdminHome" class="btn btn-outline btn-primary" target="_parent">Admin Home</a>
+	<a href="/SpringFM/Homepage" class="btn btn-success" target="_parent">Display-Products</a>
+	<a href="/SpringFM/AdminHome" class="btn btn-primary" target="_parent">Admin Home</a>
 
 	<br><br><br><br><h3>${msg }</h3>
 

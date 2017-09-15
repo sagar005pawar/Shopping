@@ -8,16 +8,10 @@
 <title>HOMEPAGE</title>
 </head>
 <%
-	//Back Button Cache Disable
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");				
 	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
 		response.sendRedirect("/SpringFM/AdminLogout");
 	} 
-
 %>
-
 <frameset rows="18%,79%,3%" border="0" class="container-fluid">
     <frame src="Heading.jsp">
     <frameset cols="20%,76%,4%">

@@ -3,9 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>
- Heading
-</title>
+<title>Heading</title>
   <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
   <script type="text/javascript" src="js/modernizr.custom.js"></script>
   <script type="text/javascript" src="js/move-top.js"></script>
@@ -13,16 +11,11 @@
   	<jsp:include page="links.jsp" />
 </head>
 <body class="container-fluid heading">
-<% 
+<%
 	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
-		response.sendRedirect("/SpringFM/logout");
+		response.sendRedirect("/SpringFM/AdminLogout");
 	} 
-	//Back Button Cache Disable
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");				
 %>
-
   <center>
   	<div class="homeHeading">Products
   		<input align="right" onkeyup="searchInfo()" ng-model="search" class="ajaxSearch" type='text' id="search" name="search" placeholder="Search"  />

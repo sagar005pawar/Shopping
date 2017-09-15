@@ -7,11 +7,5 @@
 	<jsp:include page="links.jsp" />
 </head>
 <body class="container" background="Images/wallpaper.jpg">
-<% 
-	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
-		response.sendRedirect("/SpringFM/logout");
-	} 
-%>
-
 </body>
 </html>

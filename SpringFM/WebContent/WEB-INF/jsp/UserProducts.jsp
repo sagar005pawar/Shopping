@@ -13,16 +13,10 @@
 </head>
 <body class="container" ng-app="myApp" ng-controller="uProducts">
 <%
-	//Back Button Cache Disable
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");				
-
 	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
 		response.sendRedirect("/SpringFM/logout");
 	} 
 %>
-
 <center>
 	
 	<div class="productheading">

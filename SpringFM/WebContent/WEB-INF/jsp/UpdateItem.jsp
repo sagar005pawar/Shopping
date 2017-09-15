@@ -8,17 +8,11 @@
 	<title>Update-Item</title>
 </head>
 <body class="container">
-<% 
-	//Back Button Cache Disable
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");				
+<%
 	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
 		response.sendRedirect("/SpringFM/AdminLogout");
 	} 
-
 %>
-
 <center>
 	<form action="SingleController?page=ItemUpdating" method="post" onsubmit="return confirm('Are you sure you want to Upadate this item?');">
 	<br><h2><u>Product Updating</u></h2><br><br>
@@ -44,8 +38,8 @@
 </form>
 
 	<br><br><br>
-	<a href="/Spring/Homepage" class="btn btn-outline btn-success" target="_parent">Display-Products</a>
-	<a href="/SpringFM/AdminHome" class="btn btn-outline btn-primary" target="_parent">Admin Home</a>
+	<a href="/Spring/Homepage" class="btn btn-success" target="_parent">Display-Products</a>
+	<a href="/SpringFM/AdminHome" class="btn btn-primary" target="_parent">Admin Home</a>
 
 <!-- 	
 	<input type="button" name="btn1" target="_parent" value="Display-Products" align="middle" onclick='window.location.href="Homepage.jsp"' />

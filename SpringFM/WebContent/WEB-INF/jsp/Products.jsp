@@ -10,16 +10,10 @@
 </head>
 <body class="container-fluid products" ng-app="myApp" ng-controller="uProducts">
 <%
-	//Back Button Cache Disable
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");				
-
 	if(session.isNew() || (session.getAttribute("userLog")!="login")) {
 		response.sendRedirect("/SpringFM/AdminLogout");
 	} 
 %>
-
 <center>
 	<div class="productheading">
 		${type } Items
