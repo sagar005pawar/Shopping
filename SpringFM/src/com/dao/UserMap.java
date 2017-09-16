@@ -2,9 +2,7 @@ package com.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.springframework.jdbc.core.RowMapper;
-
 import com.model.User;
 
 public class UserMap implements RowMapper<User>{
@@ -19,22 +17,12 @@ public class UserMap implements RowMapper<User>{
 		u.setPassword(rs.getString(5));
 		u.setEmail(rs.getString(6));
 		u.setContact(rs.getLong(7));
-		u.setPincode(rs.getString(8));
-		u.setCity(rs.getString(9));
-		u.setAdmin(rs.getBoolean(10));
+		u.setCity(rs.getString(8));
+		u.setPincode(rs.getString(9));
+		u.setUser(rs.getString(10));
+		u.setAdmin(rs.getBoolean(11));
+		u.setFromBy(rs.getInt(12));
 		return u;
 	}
 	
 }
-
-
-/*
-@Override
-public User mapRow(ResultSet rs, int rn) throws SQLException {
-	User u = new User();
-	u.setUsername(rs.getString(1));
-	u.setPassword(rs.getString(2));
-	u.setCity(rs.getString(3));
-	return u;
-}
-*/

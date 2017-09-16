@@ -262,10 +262,13 @@ public class Controller {
 			System.out.println("errors= " + br.getErrorCount());
 			msg = "NOT Register ERROR in: " + br.getFieldError().getField();
 		}
-		if(!br.hasErrors()){
-			System.out.println(u);
-			service.SingupDAO(u);
-			msg = "User Registered..";
+		if(!br.hasErrors()) {
+			if ((service.getUser(u.getUsername(), u.getPassword()))==null) {
+				service.SingupDAO(u);
+				return new ModelAndView("Login", "msg", "New User Created..!");			
+			} else {
+				msg = "User didn't created, UserName Already Exist..!";				
+			}
 		}
 		return new ModelAndView("Login", "msg", msg);			
 	}			
@@ -273,8 +276,11 @@ public class Controller {
 
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public ModelAndView valid(@ModelAttribute User u, BindingResult br) {
+		if(br.hasErrors()) {
+			return new ModelAndView("Login", "msg", br.getAllErrors());			
+		}
 		User u1 = service.validateUser(u);
-		if(u1!=null && u1.getCity()!=null) {
+		if(u1!=null) {
 			sess.setAttribute("userLog", "login");
 			sess.setAttribute("user", u1);
 			service.ShoppingTruncate();

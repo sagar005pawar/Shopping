@@ -340,40 +340,38 @@ public class AdminControl {
 	@RequestMapping("/ASignupCntl")
 	public ModelAndView asignupCntl(@ModelAttribute("user") User u, BindingResult br) { 
 		String msg = null;
-		if(br.hasErrors()){
+		if(br.hasErrors()) {
 			System.out.println("errors= " + br.getErrorCount());
 			msg = "NOT Register ERROR in: " + br.getFieldError().getField();
 		}
-		if(!br.hasErrors()){
-			System.out.println(u);
-			service.SingupDAO(u);
-			msg = "Registered..";
+		if(!br.hasErrors()) {
+			if ((service.getUser(u.getUsername(), u.getPassword()))==null) {
+				service.SingupDAO(u);
+				return new ModelAndView("AdminLoginPage", "msg", "New Admin Created..!");			
+			} else {
+				msg = "Admin didn't created, UserName Already Exist..!";				
+			}
 		}
 		return new ModelAndView("AdminLoginPage", "msg", msg);			
 	}			
 
-
+	
 	@RequestMapping(value="/AdminLogin", method = RequestMethod.POST)
 	public ModelAndView validation(@ModelAttribute User u, BindingResult br) {
 		if(br.hasErrors()){
 			return new ModelAndView("AdminLoginPage", "msg", br.getAllErrors());			
 		}
 		User u1 = service.validateUser(u);
-		System.out.println("u1= "+u1);
-		if(u1!=null && u1.getUser().equals("admin") && u1.getUser()!=null) {
-			if(u1.isAdmin()){
+		if(u1!=null) {
+			if(u1.isAdmin() && u1.getUser().equals("admin")) { 
 				sess.setAttribute("userLog", "login");
 				sess.setAttribute("user", u1);
-				service.ShoppingTruncate();
-				Shopping T =  new Shopping();
-				T.setTotal(0.0d);
-				sess.setAttribute("total", T);
 				return new ModelAndView("AdminHomePage", "user", u1);										
 			} else {
-				return new ModelAndView("AdminLoginPage", "msg", "NOT Authorised..");
+				return new ModelAndView("AdminLoginPage", "msg", "Admin NOT Authorised..!");
 			}
 		} else {
-			return new ModelAndView("AdminLoginPage", "msg", "NOT ADMIN..");									
+			return new ModelAndView("AdminLoginPage", "msg", "Invalid ADMIN..!");									
 		}
 	}	
 
