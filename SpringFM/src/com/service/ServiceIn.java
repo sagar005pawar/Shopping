@@ -34,5 +34,6 @@ public interface ServiceIn {
 	public boolean adminApprove(int id, int fromBy);
 	public User saveChanges(User u1);	
 	public User changePassword(User u1);
+	public Products getProduct(int id);
 	
 }

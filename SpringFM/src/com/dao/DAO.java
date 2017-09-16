@@ -304,24 +304,23 @@ public class DAO implements DaoIn {
 		}		
 		return status;
 	}
-
 	
 	public boolean ItemUpdating(Products p) {
-		boolean status = false;
 		try {
 			this.session = sessionFactory.openSession();
 			this.session.beginTransaction();
-
-			session.update(p);
-			status=true;
-			System.out.println("Updated..");
+			if((getProduct(p.getId()))!=null) {
+				session.update(p);
+				System.out.println("Updated..!");
+				return true;				
+			}
 		} catch (Exception e) {
 			this.exceptional();
 			System.err.println(e);
 		} finally {
 			this.closeSession();
 		}		
-		return status;
+		return false;
 	}
 
 	
@@ -514,7 +513,7 @@ public class DAO implements DaoIn {
 		return u1;
 	}
 	
-	public User  validateUser(User u1) {			
+	public User validateUser(User u1) {			
 		try {		
 			this.session = sessionFactory.openSession();
 			this.session.beginTransaction();
@@ -592,6 +591,26 @@ public class DAO implements DaoIn {
 		return null;
 	}
 
+	@Override
+	public Products getProduct(int id) {
+		try {		
+			this.session = sessionFactory.openSession();
+			this.session.beginTransaction();
+			String queryString = "from products where id = :id";
+			org.hibernate.Query query = this.session.createQuery(queryString);
+			query.setInteger("id", id);
+			Object queryResult = query.uniqueResult();
+			return ((Products)queryResult);
+		} catch (Exception e) {
+			this.exceptional();
+			System.err.println(e);
+		} finally {
+			this.closeSession();
+		}		
+		return null;
+	}
+
+	
 	@Override
 	public User getUser(int id) {
 		try {		

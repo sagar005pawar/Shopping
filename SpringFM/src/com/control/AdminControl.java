@@ -153,7 +153,7 @@ public class AdminControl {
 	@RequestMapping("/ItemInserting")
 	public ModelAndView InsertingItem(@ModelAttribute() Products p, BindingResult br) {
 		if(br.hasErrors()){
-			return new ModelAndView("Updating", "msg", br.getAllErrors());			
+			return new ModelAndView("InsertItem", "msg", br.getAllErrors());			
 		}
 		System.out.println("Inserting=  " + p);
 		if (service.ItemInserting(p)) {
@@ -163,6 +163,20 @@ public class AdminControl {
 		}
 	}
 	
+	@RequestMapping("/ItemUpdating")
+	public ModelAndView itemUpdating(@ModelAttribute() Products p, BindingResult br) {
+		if(br.hasErrors()){
+			return new ModelAndView("UpdateItem", "msg", br.getAllErrors());			
+		}
+		System.out.println("Updating=  " + p);
+		if (service.ItemUpdating(p)) {
+			return new ModelAndView("UpdateItem", "msg", p.getType() + " Updated...");
+		} else {
+			return new ModelAndView("UpdateItem", "msg", p.getType() + " NOT Updated...");
+		}
+	}
+
+		
 	@RequestMapping("/newAdmins")
 	public ModelAndView newAdmins() {
 		try {			

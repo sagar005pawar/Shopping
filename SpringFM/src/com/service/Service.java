@@ -160,5 +160,10 @@ public class Service implements ServiceIn {
 	public User changePassword(User u1) {
 		return this.dao.changePassword(u1);
 	}
+
+	@Override
+	public Products getProduct(int id) {
+		return this.dao.getProduct(id);
+	}
 		
 }
