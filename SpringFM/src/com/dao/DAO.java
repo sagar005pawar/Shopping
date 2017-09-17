@@ -307,13 +307,35 @@ public class DAO implements DaoIn {
 	
 	public boolean ItemUpdating(Products p) {
 		try {
+			System.out.println("entr");
 			this.session = sessionFactory.openSession();
 			this.session.beginTransaction();
-			if((getProduct(p.getId()))!=null) {
+			if((this.session.get(Products.class, p.getId()))!=null) {
 				session.update(p);
-				System.out.println("Updated..!");
 				return true;				
+			}else{
+				return false;
 			}
+		} catch (Exception e) {
+			this.exceptional();
+			System.err.println(e);
+			return false;
+		} finally {
+			this.closeSession();
+		}		
+	}
+
+	
+	public boolean ItemDeletion(String id) {
+		try {
+			this.session = sessionFactory.openSession();
+			this.session.beginTransaction();
+			Products p = (Products) this.session.get(Products.class, Integer.parseInt(id));
+			System.out.println("Deleted Item...");
+			if (p!=null) {
+				this.session.delete(p);
+				return true;
+			}		
 		} catch (Exception e) {
 			this.exceptional();
 			System.err.println(e);
@@ -322,58 +344,30 @@ public class DAO implements DaoIn {
 		}		
 		return false;
 	}
-
-	
-	public boolean ItemDeletion(String id) {
-		boolean status=false;
-		try {
-			this.session = sessionFactory.openSession();
-			this.session.beginTransaction();
-			System.out.println("dao del..");
-			String queryString = "from Products where Id = :idsa";
-			  org.hibernate.Query query = this.session.createQuery(queryString);
-			  query.setString("idsa", id);
-				System.out.println("dao d");
-
-			  Object queryResult = query.uniqueResult();
-			  Products p1 = (Products)queryResult;
-			  System.out.println(p1.getPrName());
-			  this.session.delete(p1);
-			  System.out.println("Deleted Item...");
-			  status=true;
-		} catch (Exception e) {
-			this.exceptional();
-			System.err.println(e);
-		} finally {
-			this.closeSession();
-		}		
-		return status;
-	}
 	
 	
 	public boolean SectionDeletion(String type) {
-		boolean status=false;
 		try {
 			this.session = sessionFactory.openSession();
 			this.session.beginTransaction();
 			Query queryResult = this.session.createQuery("FROM Products WHERE Type = :type");
 			queryResult.setString("type", type);
 			java.util.List allPr;
-			allPr = queryResult.list(); 
+			allPr = queryResult.list();
 			for (int i = 0; i < allPr.size(); i++) {
-				Products p1 = (Products) allPr.get(i);
-				System.out.println(p1);
-				this.session.delete(p1);
+				this.session.delete((Products) allPr.get(i));
 			}
-			status=true;			
-			System.out.println("Deleted Section...");
+			if(allPr.size()>0){
+				System.out.println("Deleted Section...");				
+				return true;
+			}
 		} catch (Exception e) {
 			this.exceptional();
 			System.err.println(e);
 		} finally {
 			this.closeSession();
 		}		
-		return status;
+		return false;
 	}
 
 	
@@ -594,13 +588,11 @@ public class DAO implements DaoIn {
 	@Override
 	public Products getProduct(int id) {
 		try {		
+			Products p= null;
 			this.session = sessionFactory.openSession();
 			this.session.beginTransaction();
-			String queryString = "from products where id = :id";
-			org.hibernate.Query query = this.session.createQuery(queryString);
-			query.setInteger("id", id);
-			Object queryResult = query.uniqueResult();
-			return ((Products)queryResult);
+			p = (Products) this.session.get(Products.class, id);
+			return p;
 		} catch (Exception e) {
 			this.exceptional();
 			System.err.println(e);
@@ -613,14 +605,12 @@ public class DAO implements DaoIn {
 	
 	@Override
 	public User getUser(int id) {
-		try {		
+		try {
+			User u = null;
 			this.session = sessionFactory.openSession();
 			this.session.beginTransaction();
-			String queryString = "from User where id = :id";
-			org.hibernate.Query query = this.session.createQuery(queryString);
-			query.setInteger("id", id);
-			Object queryResult = query.uniqueResult();
-			return ((User)queryResult);
+			u = (User) this.session.get(User.class, id);
+			return u;
 		} catch (Exception e) {
 			this.exceptional();
 			System.err.println(e);

@@ -32,10 +32,10 @@
 						<th>Price</th>
 					</tr>
 					<tr>
-						<td><input type="number" name="id" required="required" /></td>
-						<td><input type="text" name="prName" required="required" /></td>
-						<td><input type="text" name="type" required="required" /></td>
-						<td><input type="number" name="QA" required="required" /></td>
+						<td><input type="number" min="1" name="id" required="required" /></td>
+						<td><input type="text" pattern="[a-zA-Z][a-zA-Z0-9\s]*" name="prName" required="required" /></td>
+						<td><input type="text" pattern="[a-zA-Z][a-zA-Z0-9\s]*" name="type" required="required" /></td>
+						<td><input type="number" min="1" name="QA" required="required" /></td>
 						<td><input type="number" name="price" min=1 required="required" /></td>
 					</tr>
 				</table>
@@ -48,7 +48,7 @@
 			<a href="/SpringFM/Homepage" class="btn btn-success" target="_parent">Display-Products</a>
 			<a href="/SpringFM/AdminHome" class="btn btn-primary" target="_parent">Admin Home</a>
 	
-			<br><br><br><br>
+			<br><br><br>
 			<h3>${msg }</h3>		
 		</div>
 	</div>

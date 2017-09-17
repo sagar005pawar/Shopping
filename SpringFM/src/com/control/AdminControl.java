@@ -165,18 +165,19 @@ public class AdminControl {
 	
 	@RequestMapping("/ItemUpdating")
 	public ModelAndView itemUpdating(@ModelAttribute() Products p, BindingResult br) {
-		if(br.hasErrors()){
-			return new ModelAndView("UpdateItem", "msg", br.getAllErrors());			
+		if(br.hasErrors()) {
+			return new ModelAndView("UpdateItem", "msg", br.getAllErrors());
 		}
 		System.out.println("Updating=  " + p);
 		if (service.ItemUpdating(p)) {
+			System.out.println("if");
 			return new ModelAndView("UpdateItem", "msg", p.getType() + " Updated...");
 		} else {
+			System.out.println("els");
 			return new ModelAndView("UpdateItem", "msg", p.getType() + " NOT Updated...");
 		}
 	}
 
-		
 	@RequestMapping("/newAdmins")
 	public ModelAndView newAdmins() {
 		try {			

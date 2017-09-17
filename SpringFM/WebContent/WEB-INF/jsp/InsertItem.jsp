@@ -31,19 +31,20 @@
 				</tr>
 				<tr>
 				<c:if test="${type=='' || type==null}">
-					<td align="center"> <input type="text" name="type" align="middle" required="required" /></td>
+					<td align="center"> <input pattern="[a-zA-Z][a-zA-Z0-9\s]*" type="text" name="type" align="middle" required="required" /></td>
 				</c:if>	
 				<c:if test="${type!='' && type!=null}">
 					<input type="hidden" name="type" value="${type }" required="required" /></td>
-					<td align="center"> <input value="${type }" type="text" id="type" name="type" align="middle" required="required" /></td>
+					<td align="center"> <input pattern="[a-zA-Z][a-zA-Z0-9\s]*" value="${type }" type="text" id="type" name="type" align="middle" required="required" /></td>
 				</c:if>
-					<td align="center"> <input type="text" name="prName" align="middle" required="required" /></td>
-					<td align="center"> <input type="number" name="QA" align="middle" required="required" /></td>
+					<td align="center"> <input pattern="[a-zA-Z][a-zA-Z0-9\s]*" type="text" name="prName" align="middle" required="required" /></td>
+					<td align="center"> <input type="number" min="1" name="QA" align="middle" required="required" /></td>
 					<td align="center"> <input type="number" min=1 name="price" align="middle" required="required" /></td>
-					<td><input type="submit" class="btn btn-outline btn-black" name="btn1" value="Insert Item" align="middle" /></td>
-					<td><input type="reset" class="btn btn-outline btn-black" name="btn1" value="Clear" align="middle" /></td>
 				</tr>
 			</table>
+			<br>
+			<input type="submit" class="btn btn-outline btn-black" name="btn1" value="Insert Item" />
+			<input type="reset" class="btn btn-outline btn-black" name="btn1" value="Clear" />
 		</form>
 		<br><br>
 		<a href="/SpringFM/Homepage" class="btn btn-success" target="_parent">Display-Products</a>
