@@ -165,5 +165,16 @@ public class Service implements ServiceIn {
 	public Products getProduct(int id) {
 		return this.dao.getProduct(id);
 	}
+
+	@Override
+	public boolean updateProduct(Products p) {
+		return this.dao.updateProduct(p);
+	}
+
+	@Override
+	public List<Products> getPrByName(String prname) {
+		return this.dao.getPrByName(prname);
+	}
+
 		
 }

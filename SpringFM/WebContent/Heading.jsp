@@ -18,7 +18,7 @@
 %>
   <center>
   	<div class="homeHeading">Products
-  		<input align="right" onkeyup="searchInfo()" ng-model="search" class="ajaxSearch" type='text' id="search" name="search" placeholder="Search"  />
+  		<input align="right" pattern="[a-zA-Z][a-zA-Z0-9\s]*" onkeyup="searchInfo()" ng-model="search" class="ajaxSearch" type='text' id="search" name="search" placeholder="Search"  />
  	</div>
  	  	<span class="searchingList" id="searchingList">
   		</span>

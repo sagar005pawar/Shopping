@@ -35,14 +35,14 @@ public class AdminControl {
 	
 	@RequestMapping("/Homepage")
 	public ModelAndView homepage() {
-		sess.setAttribute("Products", (service.getProducts()).stream().collect(Collectors.toList()));
+		sess.setAttribute("Products", (service.getProducts()).stream().map(Products::getPrName).distinct().sorted().collect(Collectors.toList()));
 		return new ModelAndView("Homepage");
 	}	
 	
 	@RequestMapping("/DisplayProductSections")
 	public ModelAndView home() {
 		try {			
-			sess.setAttribute("sc", (service.getProducts()).stream().sorted((f1, f2)->f1.getType().toLowerCase().compareTo(f2.getType().toLowerCase())).map(Products::getType).distinct().collect(Collectors.toList()));
+			sess.setAttribute("sc", (service.DPSections()).stream().sorted((f1, f2)->f1.getType().toLowerCase().compareTo(f2.getType().toLowerCase())).map(Products::getType).distinct().collect(Collectors.toList()));
 			return new ModelAndView("Home");
 		} catch (Exception e) {
 			return new ModelAndView("redirect:/AdminLogout");
@@ -52,8 +52,7 @@ public class AdminControl {
 	@RequestMapping(value="/SectionItemsList/{type}", method=RequestMethod.GET)
 	public ModelAndView sectionItemsList(@PathVariable("type") String type) {
 		try {
-			System.out.println("SectionItemsListToUser.. "+ type);
-			sess.setAttribute("asi", (service.getProducts()).stream().filter(p->p.getType().equals(type)).sorted().collect(Collectors.toList()));
+			sess.setAttribute("asi", (service.SectonItemsList(type)).stream().filter(p->p.getType().equals(type)).sorted().collect(Collectors.toList()));
 			return new ModelAndView("Products");
 		} catch (Exception e) {
 			return new ModelAndView("Wel");
@@ -133,12 +132,12 @@ public class AdminControl {
 	}	
 	
 	@RequestMapping("/UpdateProduct")
-	public ModelAndView updateProduct(@ModelAttribute Products p, BindingResult br) {
+	public ModelAndView updateProduct(@ModelAttribute("pro") Products p, BindingResult br) {
 		if(br.hasErrors()){
 			return new ModelAndView("Updating", "msg", br.getAllErrors());			
 		}
 		System.out.println("Updating=  " + p);
-		if (service.ItemUpdating(p)) {
+		if (service.updateProduct(p)) {
 			return new ModelAndView("Updating", "msg", p.getPrName() + " Updated...");	
 		} else {
 			return new ModelAndView("Updating", "msg", p.getPrName() + " NOT Updated...");

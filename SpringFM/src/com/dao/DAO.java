@@ -304,14 +304,30 @@ public class DAO implements DaoIn {
 		}		
 		return status;
 	}
+
+	public boolean updateProduct(Products p) {
+		try {
+			this.session = sessionFactory.openSession();
+			this.session.beginTransaction();
+			this.session.update(p);
+			return true;				
+		} catch (Exception e) {
+			this.exceptional();
+			System.err.println(e);
+		} finally {
+			this.closeSession();
+		}		
+		return false;
+	}
+
 	
 	public boolean ItemUpdating(Products p) {
 		try {
-			System.out.println("entr");
+			Products p1 = getProduct(p.getId());
 			this.session = sessionFactory.openSession();
 			this.session.beginTransaction();
-			if((this.session.get(Products.class, p.getId()))!=null) {
-				session.update(p);
+			if(p1!=null) {
+				this.session.update(p);
 				return true;				
 			}else{
 				return false;
@@ -328,10 +344,9 @@ public class DAO implements DaoIn {
 	
 	public boolean ItemDeletion(String id) {
 		try {
+			Products p = getProduct(Integer.parseInt(id));
 			this.session = sessionFactory.openSession();
 			this.session.beginTransaction();
-			Products p = (Products) this.session.get(Products.class, Integer.parseInt(id));
-			System.out.println("Deleted Item...");
 			if (p!=null) {
 				this.session.delete(p);
 				return true;
@@ -368,13 +383,10 @@ public class DAO implements DaoIn {
 			this.closeSession();
 		}		
 		return false;
-	}
-
-	
-	
+	}	
 	
 	public List<Products> DPSections(){
-		ArrayList<Products> a1 = new ArrayList<Products>();
+		List<Products> a1 = new ArrayList<>();
 		try {		
 			this.session = sessionFactory.openSession();
 			this.session.beginTransaction();
@@ -439,7 +451,7 @@ public class DAO implements DaoIn {
 	
 	
 	public List<Products> SectonItemsList(String type) {
-		ArrayList<Products> a1 = new ArrayList<Products>(); 
+		List<Products> a1 = new ArrayList<>(); 
 		try {
 			this.session = sessionFactory.openSession();
 			this.session.beginTransaction();
@@ -455,6 +467,24 @@ public class DAO implements DaoIn {
 		return a1;
 	}	
 
+	public List<Products> getPrByName(String prname) {
+		List<Products> a1 = new ArrayList<>(); 
+		try {
+			this.session = sessionFactory.openSession();
+			this.session.beginTransaction();
+			org.hibernate.Query queryResult = this.session.createQuery("from Products where prname = :prname");
+			queryResult.setString("prname", prname);
+			a1 = (ArrayList<Products>) queryResult.list(); 			
+		} catch (Exception e) {
+			this.exceptional();
+			System.err.println(e);
+		} finally {
+			this.closeSession();
+		}		
+		return a1;
+	}	
+
+	
 	public User changePassword(User u1){
 		User u = getUser(u1.getId());
 		try {
@@ -671,6 +701,8 @@ public class DAO implements DaoIn {
 		}		
 		return false;
 	}
+
+
 	
 	public List<Products> getProducts() {
 		ArrayList<Products> a1 = new ArrayList<Products>();

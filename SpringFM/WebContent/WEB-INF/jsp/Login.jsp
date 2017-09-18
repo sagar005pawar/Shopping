@@ -43,13 +43,13 @@
 	    		<div class="form-group">
 	      			<label class="control-label col-sm-5" for="usname11">Enter the Username:</label>
 	      			<div class="col-sm-3">
-	      				<input ng-model="usname" class="input-uname form-control" type='text' id="usname11" name='username' placeholder="Enter Username" required="required" />
+	      				<input pattern="[a-zA-Z][a-zA-Z0-9\s]*" ng-model="usname" class="input-uname form-control" type='text' id="usname11" name='username' placeholder="Enter Username" required="required" />
 	      			</div>
 	    		</div>
 	    		<div class="form-group">
 	      			<label class="control-label col-sm-5" for="pass11">Enter the Password:</label>
 	      			<div class="col-sm-3">
-	        			<input ng-model="pass" class="lp-input-pass form-control" type='password' id="pass11" name='password' placeholder="Enter password" required="required" />
+	        			<input pattern="[a-zA-Z][a-zA-Z0-9\s]*" ng-model="pass" class="lp-input-pass form-control" type='password' id="pass11" name='password' placeholder="Enter password" required="required" />
 	      			</div>
 	    		</div>
 	    		<div class="form-group">

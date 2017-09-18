@@ -32,9 +32,6 @@ import rest.ProductForm;
 @PropertySource(value = { "classpath:/SpringFM.properties" })
 public class Controller {
 
-	//@SessionAttributes({"user", "userLog", "sc", "asi", "shopping", "total"})
-	private static final Logger logger = LoggerFactory.getLogger(Controller.class);
-
 	@Autowired
 	private ServiceIn service;
 	
@@ -43,6 +40,10 @@ public class Controller {
 	
 	@Autowired
 	private HttpSession sess;
+
+	//@SessionAttributes({"user", "userLog", "sc", "asi", "shopping", "total"})
+	private static final Logger logger = LoggerFactory.getLogger(Controller.class);
+
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/sortList/{var}/{from}/{type}", method=RequestMethod.GET)
@@ -90,7 +91,7 @@ public class Controller {
 		try {
 			String t = term.trim();
 			if (t!="" && t!=null && t!=" ") {
-                String searchList = new Gson().toJson(((List<Products>) sess.getAttribute("Products")).stream().filter(p->p.getPrName().toLowerCase().contains(t.toLowerCase())).map(Products::getPrName).distinct().limit(4).collect(Collectors.toList()));
+                String searchList = new Gson().toJson(((List<String>) sess.getAttribute("Products")).stream().filter(p->p.toLowerCase().contains(t.toLowerCase())).distinct().limit(4).collect(Collectors.toList()));
                 System.out.println("searchList= " + searchList);
                 resp.getWriter().write(searchList);
 			} else {
@@ -104,8 +105,9 @@ public class Controller {
 	@RequestMapping("/searchAJAXpro/{prname}")
 	public ModelAndView searchAJAXpro(@PathVariable("prname") String prname){
 		try {
-			sess.setAttribute("asi", (service.getProducts()).stream().filter(p->p.getPrName().toLowerCase().equals(prname.toLowerCase())).collect(Collectors.toList()));
-			return new ModelAndView("UserProducts");
+			List<Products> p3 = (List<Products>) service.getPrByName(prname).stream().filter(p->p.getPrName().toLowerCase().equals(prname.toLowerCase())).collect(Collectors.toList());
+			sess.setAttribute("asi", p3);
+			return new ModelAndView("UserProducts", "type", p3.get(0).getType());
 		} catch (Exception e) {
 			return new ModelAndView("redirect:/logout");
 		}		
@@ -114,9 +116,9 @@ public class Controller {
 	@RequestMapping("/AsearchAJAXpro/{prname}")
 	public ModelAndView asearchAJAXpro(@PathVariable("prname") String prname){
 		try {
-			System.out.println("SectionItemsListToUser.. "+ prname);
-			sess.setAttribute("asi", (service.getProducts()).stream().filter(p->p.getPrName().toLowerCase().equals(prname.toLowerCase())).collect(Collectors.toList()));
-			return new ModelAndView("Products");
+			List<Products> p3 = (List<Products>) service.getPrByName(prname).stream().filter(p->p.getPrName().toLowerCase().equals(prname.toLowerCase())).collect(Collectors.toList());
+			sess.setAttribute("asi", p3);
+			return new ModelAndView("Products", "type", p3.get(0).getType());
 		} catch (Exception e) {
 			return new ModelAndView("redirect:/AdminLogout");
 		}		
@@ -199,14 +201,14 @@ public class Controller {
 
 	@RequestMapping("/UserHomepage")
 	public ModelAndView userHomepage() {
-		sess.setAttribute("Products", (service.getProducts()).stream().collect(Collectors.toList()));
+		sess.setAttribute("Products", (service.getProducts()).stream().map(Products::getPrName).distinct().sorted().collect(Collectors.toList()));
 		return new ModelAndView("UserHomepage");
 	}	
 
 	@RequestMapping("/DisplayProductSectionsUserHome")
 	public ModelAndView userHome() {
 		try {			
-			sess.setAttribute("sc", (service.getProducts()).stream().sorted((f1, f2)->f1.getType().toLowerCase().compareTo(f2.getType().toLowerCase())).map(Products::getType).distinct().collect(Collectors.toList()));
+			sess.setAttribute("sc", (service.DPSections()).stream().sorted((f1, f2)->f1.getType().toLowerCase().compareTo(f2.getType().toLowerCase())).map(Products::getType).distinct().collect(Collectors.toList()));
 			return new ModelAndView("UserHome");
 		} catch (Exception e) {
 			return new ModelAndView("redirect:/logout");
@@ -218,7 +220,7 @@ public class Controller {
 	public ModelAndView sectionItemsListToUser(@PathVariable("type") String type) {
 		try {
 			System.out.println("SectionItemsListToUser.. "+ type);
-			sess.setAttribute("asi", (service.getProducts()).stream().filter(p->p.getType().equals(type)).sorted((h1, h2)->h1.getPrName().compareToIgnoreCase(h2.getPrName())).collect(Collectors.toList()));
+			sess.setAttribute("asi", (service.SectonItemsList(type)).stream().filter(p->p.getType().equals(type)).sorted((h1, h2)->h1.getPrName().compareToIgnoreCase(h2.getPrName())).collect(Collectors.toList()));
 			return new ModelAndView("UserProducts");
 		} catch (Exception e) {
 			return new ModelAndView("Wel");

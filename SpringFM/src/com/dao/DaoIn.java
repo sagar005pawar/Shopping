@@ -37,5 +37,9 @@ public interface DaoIn {
 	public User saveChanges(User u1);
 	public User changePassword(User u1);
 	public Products getProduct(int id);
+	public boolean updateProduct(Products p);
+	public List<Products> getPrByName(String prname);
+	
+	
 	
 }

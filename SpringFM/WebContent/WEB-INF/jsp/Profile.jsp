@@ -33,14 +33,14 @@
 			    <div class="form-group">
 					<label for="fname" class="col-sm-5 control-label">First Name</label>			      
 					<div class="col-sm-3">
-				        <input value="${urPro.fname }" id="fname" name="fname" type="text" placeholder="Enter your First Name" title="Enter your First Name" class="form-control" required="required">
+				        <input value="${urPro.fname }" pattern="[a-zA-Z][a-zA-Z0-9\s]*" id="fname" name="fname" type="text" placeholder="Enter your First Name" title="Enter your First Name" class="form-control" required="required">
 						<span id="errfname"></span>
 				  	</div>
 			    </div>
 			    <div class="form-group">
 					<label for="lname" class="col-sm-5 control-label">Last Name</label>			      
 					<div class="col-sm-3">
-			        	<input value="${urPro.lname }" id="lname" name="lname" type="text" placeholder="Enter your SureName" title="Enter your LastName/SureName" class="form-control" required="required">
+			        	<input value="${urPro.lname }" pattern="[a-zA-Z][a-zA-Z0-9\s]*" id="lname" name="lname" type="text" placeholder="Enter your SureName" title="Enter your LastName/SureName" class="form-control" required="required">
 						<span id="errlname"></span>
 				  	</div>
 			    </div>
@@ -61,7 +61,7 @@
 			    <div class="form-group">
 					<label for="city" class="col-sm-5 control-label">City</label>			      
 					<div class="col-sm-3">
-				        <input value="${urPro.city }" id="city" name="city" type="text" placeholder="Enter your City" title="Enter your City" class="form-control" required="required">
+				        <input value="${urPro.city }" pattern="[a-zA-Z][a-zA-Z0-9\s]*" id="city" name="city" type="text" placeholder="Enter your City" title="Enter your City" class="form-control" required="required">
 						<span id="errcity"></span>
 				  	</div>
 			    </div>
@@ -100,19 +100,19 @@
 					<td>
 						<input type="hidden" id="txt4" name="chPassword" value="${urPro.password }" required="required" />
 						<input type="hidden" id="id" name="id" value="${urPro.id }" required="required" />
-						<input type="password" id="txt4" name="cnPassword" required="required" />
+						<input type="password" pattern="[a-zA-Z][a-zA-Z0-9\s]*" id="txt4" name="cnPassword" required="required" />
 					</td>
 				</tr>
 				<tr>
 					<th>NEW Password</th>
 					<td>
-						<input type="password" id="txt4" name="nPassword" required="required" />
+						<input type="password" pattern="[a-zA-Z][a-zA-Z0-9\s]*" id="txt4" name="nPassword" required="required" />
 					</td>
 				</tr>
 				<tr>
 					<th>Confirm </th>
 					<td>
-						<input type="password" id="txt4" name="password" required="required" />
+						<input type="password" pattern="[a-zA-Z][a-zA-Z0-9\s]*" id="txt4" name="password" required="required" />
 					</td>
 				</tr>				
 			</tbody>

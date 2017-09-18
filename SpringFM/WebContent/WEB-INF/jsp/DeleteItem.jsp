@@ -18,7 +18,7 @@
 	<div class="w3-card-4">
 		<br><h2 style="font-family: Algerian">Product Deleting</h2><br><br>
 		<div class="w3-grey"><br>
-			<form action="/SpringFM/ItemDeletion" class="form-horizontal" method="post">
+			<form action="/SpringFM/ItemDeletion" class="form-horizontal" method="post" onsubmit="return confirm('Are you sure you want to Delete this Product?');">
 				<div class="form-group">
 					<label for="id" class="col-sm-5 control-label">Product _ ID</label>			      
 					<div class="col-sm-3">
@@ -29,7 +29,7 @@
 					</div>			  	
 				</div>
 			</form>
-			<form action="/SpringFM/SectionDeletion" class="form-horizontal" method="post">
+			<form action="/SpringFM/SectionDeletion" class="form-horizontal" method="post" onsubmit="return confirm('Are you sure you want to Products Section this item?');">
 				<div class="form-group">
 					<label for="id" class="col-sm-5 control-label">Section/Type</label>			      
 					<div class="col-sm-3">

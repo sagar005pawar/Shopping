@@ -23,7 +23,7 @@
       <div class="col-sm-4 col-sm-offset-4">
       	<div class="input-group">
 		    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-	        <input id="fname" name="fname" type="text" placeholder="Enter your First Name" title="Enter your First Name" class="form-control" required="required">
+	        <input id="fname" pattern="[a-zA-Z][a-zA-Z0-9\s]*" name="fname" type="text" placeholder="Enter your First Name" title="Enter your First Name" class="form-control" required="required">
 	        <span id="errfname"></span>
         </div>
       </div>
@@ -32,7 +32,7 @@
       <div class="col-sm-4 col-sm-offset-4">
         <div class="input-group">
 		    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-        	<input id="lname" name="lname" type="text" placeholder="Enter your SureName" title="Enter your LastName/SureName" class="form-control" required="required">
+        	<input id="lname" pattern="[a-zA-Z][a-zA-Z0-9\s]*" name="lname" type="text" placeholder="Enter your SureName" title="Enter your LastName/SureName" class="form-control" required="required">
 	        <span id="errlname"></span>
         </div>
       </div>
@@ -41,7 +41,7 @@
       <div class="col-sm-4 col-sm-offset-4">
         <div class="input-group">
 		    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-	        <input id="username" name="username" type="text" placeholder="Enter your UserName" title="Enter your UserName" class="form-control" required="required">
+	        <input id="username" pattern="[a-zA-Z][a-zA-Z0-9\s]*" name="username" type="text" placeholder="Enter your UserName" title="Enter your UserName" class="form-control" required="required">
 	        <span id="erruname"></span>
         </div>
       </div>
@@ -50,7 +50,7 @@
       <div class="col-sm-4 col-sm-offset-4">
         <div class="input-group">
 		    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-	        <input id="password" name="password" type="password" placeholder="Enter Password" title="Enter Password" class="form-control" required="required">
+	        <input id="password" pattern="[a-zA-Z][a-zA-Z0-9\s]*" name="password" type="password" placeholder="Enter Password" title="Enter Password" class="form-control" required="required">
 	        <span id="errpass"></span>
         </div>
       </div>
@@ -59,7 +59,7 @@
       <div class="col-sm-4 col-sm-offset-4">
         <div class="input-group">
 		    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-	        <input id="repassword" name="repassword" type="password" placeholder="Re-Enter Password" title="Re-Enter Password" class="form-control" required="required">
+	        <input id="repassword" pattern="[a-zA-Z][a-zA-Z0-9\s]*" name="repassword" type="password" placeholder="Re-Enter Password" title="Re-Enter Password" class="form-control" required="required">
 	        <span id="errpass"></span>
         </div>
       </div>
@@ -86,7 +86,7 @@
       <div class="col-sm-4 col-sm-offset-4">
         <div class="input-group">
 		    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-	        <input id="city" name="city" type="text" placeholder="Enter your City" title="Enter your City" class="form-control" required="required">
+	        <input id="city" pattern="[a-zA-Z][a-zA-Z0-9\s]*" name="city" type="text" placeholder="Enter your City" title="Enter your City" class="form-control" required="required">
 	        <span id="errcity"></span>
         </div>
       </div>
@@ -100,7 +100,7 @@
         </div>
       </div>
     </div>
-	<input type="hidden" id="user" name="user" value="cust" required="required" />
+	<input type="hidden" pattern="[a-zA-Z][a-zA-Z0-9\s]*" id="user" name="user" value="cust" required="required" />
 	<div class="form-group">
     	<div class="col-sm-offset-2 col-sm-8">
       		<span class="text-danger" id="errorMessage"></span>
