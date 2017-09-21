@@ -315,10 +315,8 @@ public class Controller {
 				@SuppressWarnings("unchecked")
 				List<Shopping> a2=(ArrayList<Shopping>) sess.getAttribute("shopping");
 				Pwb.println("\n\t\t\t\tShopping-Cart\n\n");
-				Pwb.println("\tQtN\t*\tPrice\t=\tAmount\t=>\tItem\n");						
-				for (Shopping s: a2) {
-					Pwb.println("\t"+s.getQN() + "\t*\t" + s.getPrice() + "\t=\t " + s.getAmt() +"\t=>\t"+s.getPrName());
-				}
+				Pwb.println("\tQtN\t*\tPrice\t=\tAmount\t=>\tItem\n");	
+				a2.forEach(s->Pwb.println("\t"+s.getQN() + "\t*\t" + s.getPrice() + "\t=\t " + s.getAmt() +"\t=>\t"+s.getPrName()));
 				Pwb.println("\n\n\t\t\tTOTAL AMT is:=" + T.getTotal());						
 			}
 			Pwb.close();
@@ -382,7 +380,12 @@ public class Controller {
 		}
 		return "Login";					
 	}
-	
+		
+	@RequestMapping(value="/welcome", method=RequestMethod.GET)
+	public String welcome(){
+		return "welcome";					
+	}
+
 	@RequestMapping(value="/Wel", method=RequestMethod.GET)
 	public String wel(){
 		return "Wel";					

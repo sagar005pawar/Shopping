@@ -705,7 +705,7 @@ public class DAO implements DaoIn {
 
 	
 	public List<Products> getProducts() {
-		ArrayList<Products> a1 = new ArrayList<Products>();
+		List<Products> a1 = new ArrayList<>();
 		try {
 			this.session = sessionFactory.openSession();
 			this.session.beginTransaction();
@@ -744,9 +744,8 @@ public class DAO implements DaoIn {
 		if(this.session.isConnected()){
 			this.session.getTransaction().commit();
 			this.session.close();
-			System.out.println("Session closed..");
 			sessionFactory.close();
-			System.out.println("Hibernate SessionFactory closed..");
+			System.out.println("Hibernate Session & SessionFactory closed..");
 		} else {
 			sessionFactory.close();
 			System.out.println("Hibernate SessionFactory closed..");

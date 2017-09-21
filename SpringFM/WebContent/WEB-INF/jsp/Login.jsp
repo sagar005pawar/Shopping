@@ -1,4 +1,4 @@
-<%@ page session="false" import="java.util.*" errorPage="error.jsp" import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.*" errorPage="error.jsp" import="java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +35,11 @@
 
 </head>
 <body class="container-fluid lp-body">
+<%
+	if(!(session.isNew() || (session.getAttribute("userLog")!="login"))) {
+		response.sendRedirect("/SpringFM/logout");
+	} 
+%>
 	<div class="container" ng-app="">
 		<div><label class="lp">LOGIN PAGE<sup>SP</sup></label></div>
 		<br>

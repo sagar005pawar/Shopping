@@ -8,14 +8,6 @@
 	<jsp:include page="/links.jsp" />
 </head>
 <body class="container">
-<%
-	//Back Button Cache Disable
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setHeader("Expires", "0");				
-  	System.out.println("Exception:- "+exception);
-%>
-
 	<label style="text-align: center; font-size: 22px; margin-top: 25%; font-family: Castellar;">
 		<u>ERROR</u>:- <%=exception.getMessage() %>
 	</label>

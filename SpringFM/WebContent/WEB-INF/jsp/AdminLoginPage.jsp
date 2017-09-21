@@ -12,6 +12,11 @@
 	<jsp:include page="/links.jsp" />
 </head>
 <body class="container-fluid lp-body adminLoginBody">
+<%
+	if(!(session.isNew() || (session.getAttribute("userLog")!="login"))) {
+		response.sendRedirect("/SpringFM/AdminLogout");
+	} 
+%>
 	<div class="container" ng-app="">
 		<div><label class="lp">ADMIN PAGE<sup>SP</sup></label></div>
 		<br>

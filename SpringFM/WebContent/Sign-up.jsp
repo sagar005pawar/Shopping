@@ -68,7 +68,7 @@
       <div class="col-sm-4 col-sm-offset-4">
       	<div class="input-group">
 		    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-	        <input id="email" name="email" type="email" placeholder="Enter your Email ID" title="Enter your Email ID" class="form-control" required="required">
+	        <input id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" type="email" placeholder="Enter your Email ID" title="Enter your Email ID" class="form-control" required="required">
 	        <span id="erremail"></span>
         </div>
       </div>
