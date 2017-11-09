@@ -3,11 +3,13 @@
 <html>
 <head>
 	<title>Login Page</title>
+	
+	  <jsp:include page="/links.jsp" />
+	
   <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
   <script type="text/javascript" src="js/modernizr.custom.js"></script>
   <script type="text/javascript" src="js/move-top.js"></script>
   <script type="text/javascript" src="js/easing.js"></script>	
-  <jsp:include page="/links.jsp" />
 
    <script type="text/javascript">
 	function validation() {

@@ -1,4 +1,6 @@
-	var result = confirm("Want to delete?");
+var result = confirm("Want to delete?");
 	if (result) {
 		return true;
-	}else{return false;}
+	} else {
+		return false;
+	}
